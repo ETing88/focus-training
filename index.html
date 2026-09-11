@@ -21,7 +21,7 @@
   --shadow-hover:0 8px 30px rgba(0,0,0,0.5);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;transition:background 0.3s,color 0.3s}
+body{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;transition:background 0.3s,color 0.3s;overflow-x:hidden}
 a{color:var(--purple);text-decoration:none}
 a:hover{color:var(--purple-light)}
 img{max-width:100%;display:block}
@@ -44,6 +44,13 @@ button{font-family:inherit}
 .icon-btn{background:rgba(255,255,255,0.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;position:relative;flex-shrink:0}
 .icon-btn:hover{background:rgba(255,255,255,0.28);transform:scale(1.08)}
 .icon-btn .badge{position:absolute;top:-2px;right:-2px;background:var(--red);color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px}
+
+/* Hamburger */
+.hamburger{display:none;background:rgba(255,255,255,0.15);border:none;color:#fff;width:38px;height:38px;border-radius:9px;font-size:20px;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+.mobile-menu{display:none;position:fixed;top:54px;left:0;right:0;background:var(--purple);padding:12px 16px;z-index:99;flex-direction:column;gap:2px;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:rgba(255,255,255,0.9);padding:12px 14px;border-radius:10px;font-size:15px;font-weight:600;transition:background 0.2s}
+.mobile-menu a:hover{background:rgba(255,255,255,0.15);color:#fff}
 
 /* HERO */
 .hero{background:linear-gradient(135deg,var(--purple) 0%,var(--purple-light) 100%);color:#fff;padding:48px 20px 56px;text-align:center;position:relative;overflow:hidden}
@@ -361,28 +368,53 @@ button{font-family:inherit}
   .feature-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:768px){
+  body{overflow-x:hidden}
   .navbar{padding:0 12px;height:54px}
+  .hamburger{display:flex}
   .nav-links{display:none}
-  .nav-search input{width:80px}
-  .hero{padding:32px 16px 44px}
-  .hero h1{font-size:24px}
+  .nav-search{display:none}
+  .nav-right .icon-btn{width:34px;height:34px;font-size:14px}
+  .hero{padding:28px 16px 36px}
+  .hero h1{font-size:22px}
   .hero p{font-size:13px}
-  .hero-stats{gap:16px}
-  .hero-stat .num{font-size:22px}
+  .hero-stats{gap:12px}
+  .hero-stat .num{font-size:20px}
+  .hero-stat .label{font-size:11px}
   .category-grid{grid-template-columns:repeat(2,1fr)}
   .page-grid{grid-template-columns:repeat(2,1fr)}
-  .interactive-grid{grid-template-columns:repeat(2,1fr)}
+  .interactive-grid{grid-template-columns:1fr}
   .feature-grid{grid-template-columns:1fr}
   .guide-cards{grid-template-columns:1fr}
   .game-grid{grid-template-columns:1fr}
   .footer-inner{grid-template-columns:1fr}
-  .section-title{font-size:20px}
-  .daily-pick{grid-template-columns:1fr;text-align:center}
-  .daily-pick .dp-thumb{margin:0 auto}
-  .about-hero{padding:24px 16px}
-  .about-hero h2{font-size:22px}
+  .section-title{font-size:18px}
+  .daily-pick{grid-template-columns:1fr;text-align:center;padding:16px}
+  .daily-pick .dp-thumb{width:120px;margin:0 auto}
+  .daily-pick .dp-info h3{font-size:17px}
+  .daily-pick .dp-action{flex-direction:row;justify-content:center}
+  .about-hero{padding:20px 16px}
+  .about-hero h2{font-size:20px}
   .related-grid{grid-template-columns:repeat(2,1fr)}
   .stroop-options{grid-template-columns:1fr}
+  .profile-stats{grid-template-columns:repeat(2,1fr)}
+  .plan-day{grid-template-columns:50px 1fr;padding:12px}
+  .plan-day .day-num{width:42px;height:42px;font-size:15px}
+  .game-area{padding:16px}
+  .schulte-cell{font-size:20px}
+  .whack-grid{gap:8px}
+  .whack-mole{font-size:32px}
+  .sort-num,.sort-slot{width:44px;height:44px;font-size:18px}
+  .simon-board{max-width:260px}
+  .simon-center{width:64px;height:64px;font-size:12px}
+  .detail-image img{border-radius:10px}
+  .filter-bar{flex-wrap:wrap;gap:8px}
+  .breadcrumb{font-size:12px;padding:10px 0}
+  .category-header{padding:16px 0}
+  .cat-big-icon{width:48px;height:48px;font-size:24px}
+  .category-header h2{font-size:20px}
+  .assess-opt{padding:6px 10px;font-size:12px}
+  .data-actions{flex-direction:column}
+  .data-btn{justify-content:center}
 }
 
 /* ===== NEW GAMES ===== */
@@ -455,14 +487,15 @@ button{font-family:inherit}
 <body>
 <nav class="navbar">
   <div class="nav-logo" onclick="navigate('#/')"><div class="logo-icon">🎯</div><span>专注力训练乐园</span></div>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="菜单">☰</button>
   <div class="nav-links" id="navLinks">
-    <a href="#/" data-route="home">首页</a>
-    <a href="#/interactive" data-route="interactive">互动训练</a>
-    <a href="#/category/all" data-route="all">打印材料</a>
-    <a href="#/games" data-route="games">亲子游戏</a>
-    <a href="#/plan" data-route="plan">训练计划</a>
-    <a href="#/assessment" data-route="assessment">能力测评</a>
-    <a href="#/profile" data-route="profile">我的档案</a>
+    <a href="#/" data-route="home" onclick="closeMobileMenu()">首页</a>
+    <a href="#/interactive" data-route="interactive" onclick="closeMobileMenu()">互动训练</a>
+    <a href="#/category/all" data-route="all" onclick="closeMobileMenu()">打印材料</a>
+    <a href="#/games" data-route="games" onclick="closeMobileMenu()">亲子游戏</a>
+    <a href="#/plan" data-route="plan" onclick="closeMobileMenu()">训练计划</a>
+    <a href="#/assessment" data-route="assessment" onclick="closeMobileMenu()">能力测评</a>
+    <a href="#/profile" data-route="profile" onclick="closeMobileMenu()">我的档案</a>
   </div>
   <div class="nav-right">
     <div class="nav-search"><input type="text" id="searchInput" placeholder="搜索..." onkeydown="if(event.key==='Enter')doSearch()"><button onclick="doSearch()">🔍</button></div>
@@ -471,6 +504,16 @@ button{font-family:inherit}
     <button class="icon-btn" title="深色模式" onclick="toggleTheme()" id="themeBtn">🌙</button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#/" onclick="closeMobileMenu()">🏠 首页</a>
+  <a href="#/interactive" onclick="closeMobileMenu()">🎮 互动训练</a>
+  <a href="#/category/all" onclick="closeMobileMenu()">📚 打印材料</a>
+  <a href="#/games" onclick="closeMobileMenu()">👨‍👩‍👧 亲子游戏</a>
+  <a href="#/plan" onclick="closeMobileMenu()">📅 训练计划</a>
+  <a href="#/assessment" onclick="closeMobileMenu()">🧠 能力测评</a>
+  <a href="#/profile" onclick="closeMobileMenu()">👶 我的档案</a>
+  <a href="#/favorites" onclick="closeMobileMenu()">❤️ 我的收藏</a>
+</div>
 <main id="app" class="container"></main>
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
@@ -680,6 +723,8 @@ function toggleDone(n){let d=getDone();if(d.includes(n))d=d.filter(x=>x!==n);els
 // ========== THEME ==========
 function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('theme',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙'}
 function initTheme(){if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeBtn').textContent='☀️'}}
+function toggleMobileMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open')}
 
 // ========== ROUTER ==========
 function navigate(h){window.location.hash=h}
@@ -690,6 +735,12 @@ function setActiveNav(r){document.querySelectorAll('#navLinks a').forEach(a=>a.c
 
 // ========== RENDER ==========
 function render(){
+  // 清除所有可能正在运行的游戏定时器
+  if(typeof schulteState!=='undefined'&&schulteState.timer)clearInterval(schulteState.timer);
+  if(typeof memoryState!=='undefined'&&memoryState.timer)clearInterval(memoryState.timer);
+  if(typeof whackState!=='undefined'){if(whackState.interval)clearInterval(whackState.interval);if(whackState.moleInterval)clearInterval(whackState.moleInterval)}
+  if(typeof sortState!=='undefined'&&sortState.timer)clearInterval(sortState.timer);
+  if(typeof reactionState!=='undefined'&&reactionState.timeout)clearTimeout(reactionState.timeout);
   const p=getRoute();const app=document.getElementById('app');app.innerHTML='';
   if(p.length===0){setActiveNav('home');renderHome(app)}
   else if(p[0]==='interactive'&&p.length===1){setActiveNav('interactive');renderInteractiveHome(app)}
@@ -722,7 +773,7 @@ function renderHome(app){
   app.appendChild(isec);
   // 进度
   const psec=document.createElement('div');psec.className='section';psec.style.paddingTop='0';
-  psec.innerHTML=`<div class="section-title"><div class="title-icon" style="background:#E9F7EF">📊</div>训练进度</div><div class="section-subtitle">标记已完成的页面，追踪孩子的训练进度</div><div class="daily-pick" style="grid-template-columns:auto 1fr auto;max-width:100%"><div class="progress-ring-wrap"><div class="progress-ring"><svg width="70" height="70"><circle class="ring-bg" cx="35" cy="35" r="30"></circle><circle class="ring-fg" cx="35" cy="35" r="30" stroke-dasharray="${2*Math.PI*30}" stroke-dashoffset="${2*Math.PI*30*(1-progress/100)}"></circle></svg><div class="ring-text">${progress}%</div></div><div class="progress-info"><h4>已完成 ${doneCount}/${PAGES.length} 页</h4><p>在详情页点击"✓ 已完成"标记进度</p></div></div><div></div><div class="dp-action"><button class="btn-primary" onclick="navigate('#/category/all')">继续训练 →</button></div></div>`;
+  psec.innerHTML=`<div class="section-title"><div class="title-icon" style="background:#E9F7EF">📊</div>训练进度</div><div class="section-subtitle">标记已完成的页面，追踪孩子的训练进度</div><div class="daily-pick" style="grid-template-columns:auto 1fr auto;max-width:100%;margin-top:12px"><div class="progress-ring-wrap"><div class="progress-ring"><svg width="70" height="70"><circle class="ring-bg" cx="35" cy="35" r="30"></circle><circle class="ring-fg" cx="35" cy="35" r="30" stroke-dasharray="${2*Math.PI*30}" stroke-dashoffset="${2*Math.PI*30*(1-progress/100)}"></circle></svg><div class="ring-text">${progress}%</div></div><div class="progress-info"><h4>已完成 ${doneCount}/${PAGES.length} 页</h4><p>在详情页点击"✓ 已完成"标记进度</p></div></div><div></div><div class="dp-action"><button class="btn-primary" onclick="navigate('#/category/all')">继续训练 →</button></div></div>`;
   app.appendChild(psec);
   // 分类
   const csec=document.createElement('div');csec.className='section';csec.style.paddingTop='0';
@@ -733,7 +784,7 @@ function getDaily(){const t=new Date();const s=t.getFullYear()*10000+(t.getMonth
 
 // ========== INTERACTIVE HOME ==========
 function renderInteractiveHome(app){
-  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>互动训练</div><div class="category-header"><div class="cat-big-icon" style="background:#EBF5FB">🎮</div><div><h2 style="color:#3498DB">互动训练中心</h2><p>4款网页直接玩的专注力训练游戏，计时计成绩，无需打印</p></div></div><div class="interactive-grid" style="padding-bottom:40px">${INTERACTIVE.map(g=>`<div class="interactive-card" onclick="navigate('#/interactive/${g.id}')"><div class="ic-icon" style="background:${g.bg}">${g.icon}</div><div class="ic-name" style="color:${g.color}">${g.name}</div><div class="ic-desc">${g.desc}</div><span class="ic-tag" style="background:${g.color}">${g.tag}</span></div>`).join('')}</div>`;
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>互动训练</div><div class="category-header"><div class="cat-big-icon" style="background:#EBF5FB">🎮</div><div><h2 style="color:#3498DB">互动训练中心</h2><p>7款网页直接玩的专注力训练游戏，计时计成绩，无需打印</p></div></div><div class="interactive-grid" style="padding-bottom:40px">${INTERACTIVE.map(g=>`<div class="interactive-card" onclick="navigate('#/interactive/${g.id}')"><div class="ic-icon" style="background:${g.bg}">${g.icon}</div><div class="ic-name" style="color:${g.color}">${g.name}</div><div class="ic-desc">${g.desc}</div><span class="ic-tag" style="background:${g.color}">${g.tag}</span></div>`).join('')}</div>`;
 }
 
 // ========== INTERACTIVE GAMES ==========
