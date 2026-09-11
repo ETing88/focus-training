@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>专注力训练乐园 - 幼儿专注力训练平台</title>
+<style>
+:root{
+  --purple:#6C3483;--purple-light:#8E44AD;--purple-bg:#F5EEF8;
+  --pink:#E91E63;--blue:#3498DB;--green:#27AE60;--orange:#E67E22;
+  --yellow:#F1C40F;--teal:#1ABC9C;--red:#E74C3C;
+  --text:#2C3E50;--text-light:#7F8C8D;--bg:#FEF9FF;--card:#FFFFFF;
+  --card-border:#EEE;--radius:16px;
+  --shadow:0 4px 20px rgba(108,52,131,0.10);
+  --shadow-hover:0 8px 30px rgba(108,52,131,0.18);
+}
+[data-theme="dark"]{
+  --purple:#BB8FCE;--purple-light:#D2B4DE;--purple-bg:#2C1B38;
+  --text:#E8E0F0;--text-light:#A090B0;--bg:#1A1025;--card:#2A1F3A;
+  --card-border:#3D2E50;--shadow:0 4px 20px rgba(0,0,0,0.3);
+  --shadow-hover:0 8px 30px rgba(0,0,0,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;transition:background 0.3s,color 0.3s}
+a{color:var(--purple);text-decoration:none}
+a:hover{color:var(--purple-light)}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+#app{animation:fadeIn 0.35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* NAVBAR */
+.navbar{background:var(--purple);color:#fff;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.15)}
+.nav-logo{display:flex;align-items:center;gap:8px;color:#fff;font-size:18px;font-weight:800;cursor:pointer;flex-shrink:0}
+.nav-logo .logo-icon{width:34px;height:34px;background:linear-gradient(135deg,#FF6B6B,#FFD93D,#6BCB77,#4A90D9,#9B59B6);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.nav-links{display:flex;gap:2px;align-items:center}
+.nav-links a{color:rgba(255,255,255,0.85);padding:7px 12px;border-radius:8px;font-size:14px;font-weight:600;transition:all 0.2s;cursor:pointer;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,0.15);color:#fff}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-search{display:flex;align-items:center;background:rgba(255,255,255,0.15);border-radius:18px;padding:5px 10px}
+.nav-search input{background:transparent;border:none;outline:none;color:#fff;font-size:13px;width:110px}
+.nav-search input::placeholder{color:rgba(255,255,255,0.6)}
+.nav-search button{background:none;border:none;color:#fff;cursor:pointer;font-size:15px}
+.icon-btn{background:rgba(255,255,255,0.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;position:relative;flex-shrink:0}
+.icon-btn:hover{background:rgba(255,255,255,0.28);transform:scale(1.08)}
+.icon-btn .badge{position:absolute;top:-2px;right:-2px;background:var(--red);color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--purple) 0%,var(--purple-light) 100%);color:#fff;padding:48px 20px 56px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);border-radius:50%}
+.hero h1{font-size:36px;font-weight:900;margin-bottom:12px;position:relative;z-index:1;text-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.hero h1 .rainbow{background:linear-gradient(90deg,#FF6B6B,#FFD93D,#6BCB77,#4A90D9,#FF6B6B);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.hero p{font-size:16px;max-width:600px;margin:0 auto 20px;opacity:0.92;position:relative;z-index:1}
+.hero-stats{display:flex;justify-content:center;gap:36px;position:relative;z-index:1}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:30px;font-weight:900;display:block}
+.hero-stat .label{font-size:12px;opacity:0.8}
+
+/* DAILY PICK */
+.daily-pick{background:var(--card);border-radius:var(--radius);padding:20px;margin:-32px auto 0;max-width:860px;box-shadow:var(--shadow-hover);display:grid;grid-template-columns:180px 1fr auto;gap:20px;align-items:center;position:relative;z-index:2;border:2px solid var(--purple-bg)}
+.daily-pick .dp-thumb{width:180px;aspect-ratio:2484/3509;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.15);cursor:pointer}
+.daily-pick .dp-thumb img{width:100%;height:100%;object-fit:cover}
+.daily-pick .dp-info .dp-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:9px;background:linear-gradient(135deg,var(--orange),var(--red));color:#fff;margin-bottom:6px}
+.daily-pick .dp-info h3{font-size:20px;color:var(--purple);margin-bottom:4px}
+.daily-pick .dp-info p{font-size:13px;color:var(--text-light);margin-bottom:6px}
+.daily-pick .dp-meta{display:flex;gap:8px;flex-wrap:wrap}
+.daily-pick .dp-meta span{font-size:11px;padding:3px 7px;border-radius:6px;background:var(--purple-bg);color:var(--purple);font-weight:600}
+.daily-pick .dp-action{display:flex;flex-direction:column;gap:8px}
+.daily-pick .dp-action button{padding:9px 16px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.daily-pick .dp-action .btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff}
+.daily-pick .dp-action .btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(108,52,131,0.3)}
+.daily-pick .dp-action .btn-ghost{background:transparent;color:var(--purple);border:2px solid var(--purple)}
+.daily-pick .dp-action .btn-ghost:hover{background:var(--purple);color:#fff}
+
+/* CONTAINER */
+.container{max-width:1200px;margin:0 auto;padding:0 20px;flex:1;width:100%}
+.section{padding:40px 0}
+.section-title{font-size:24px;font-weight:800;color:var(--purple);margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.section-title .title-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.section-subtitle{color:var(--text-light);font-size:14px;margin-bottom:20px}
+
+/* PROGRESS RING */
+.progress-ring-wrap{display:flex;align-items:center;gap:16px}
+.progress-ring{position:relative;width:70px;height:70px;flex-shrink:0}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring .ring-bg{fill:none;stroke:var(--purple-bg);stroke-width:6}
+.progress-ring .ring-fg{fill:none;stroke:var(--purple);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 0.8s ease}
+.progress-ring .ring-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--purple)}
+.progress-info h4{font-size:15px;font-weight:700;margin-bottom:2px}
+.progress-info p{font-size:12px;color:var(--text-light)}
+
+/* CATEGORY GRID */
+.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.category-card{background:var(--card);border-radius:var(--radius);padding:22px 16px;text-align:center;cursor:pointer;transition:all 0.3s;box-shadow:var(--shadow);border:2px solid transparent}
+.category-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--purple-bg)}
+.category-card .cat-icon{width:54px;height:54px;border-radius:15px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.category-card .cat-name{font-size:15px;font-weight:700;margin-bottom:2px}
+.category-card .cat-count{font-size:12px;color:var(--text-light)}
+
+/* INTERACTIVE CARDS */
+.interactive-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.interactive-card{background:var(--card);border-radius:var(--radius);padding:24px 18px;text-align:center;cursor:pointer;transition:all 0.3s;box-shadow:var(--shadow);border:2px solid transparent;position:relative;overflow:hidden}
+.interactive-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.interactive-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.interactive-card .ic-icon{width:60px;height:60px;border-radius:16px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:30px}
+.interactive-card .ic-name{font-size:16px;font-weight:700;margin-bottom:4px}
+.interactive-card .ic-desc{font-size:12px;color:var(--text-light);line-height:1.5;margin-bottom:10px}
+.interactive-card .ic-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;color:#fff}
+
+/* PAGE GRID */
+.page-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.page-card{background:var(--card);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all 0.3s;box-shadow:var(--shadow);position:relative}
+.page-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.page-card .thumb{width:100%;aspect-ratio:2484/3509;overflow:hidden;background:#f0f0f0;position:relative}
+.page-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s}
+.page-card:hover .thumb img{transform:scale(1.05)}
+.page-card .done-badge{position:absolute;top:8px;left:8px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;z-index:2}
+.page-card .fav-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;font-size:15px;cursor:pointer;z-index:2;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.page-card .fav-btn:hover{transform:scale(1.15)}
+.page-card .fav-btn.active{color:var(--red)}
+.page-card .info{padding:10px 12px}
+.page-card .top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.page-card .page-num{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:9px;color:#fff}
+.page-card .difficulty{font-size:11px;letter-spacing:0.5px}
+.page-card .page-title{font-size:13px;font-weight:700;margin-bottom:2px;line-height:1.4}
+.page-card .page-desc{font-size:11px;color:var(--text-light);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.filter-bar label{font-size:13px;font-weight:600;color:var(--text-light)}
+.filter-bar select{padding:7px 12px;border-radius:9px;border:2px solid var(--card-border);background:var(--card);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;outline:none}
+.filter-bar select:focus{border-color:var(--purple)}
+.filter-bar .result-count{margin-left:auto;font-size:13px;color:var(--text-light)}
+
+/* DETAIL */
+.detail-layout{display:grid;grid-template-columns:1fr 340px;gap:24px;padding:24px 0}
+.detail-image{background:var(--card);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);text-align:center}
+.detail-image img{max-width:100%;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.1);cursor:zoom-in}
+.detail-image .zoom-hint{font-size:12px;color:var(--text-light);margin-top:6px}
+.detail-sidebar{position:sticky;top:76px;align-self:start}
+.detail-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:12px}
+.detail-card .detail-num{display:inline-block;font-size:11px;font-weight:700;padding:4px 10px;border-radius:11px;color:#fff;margin-bottom:8px}
+.detail-card h2{font-size:20px;font-weight:800;color:var(--purple);margin-bottom:6px}
+.detail-card .detail-desc{font-size:13px;color:var(--text-light);margin-bottom:12px;line-height:1.7}
+.detail-meta-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.meta-tag{font-size:11px;padding:4px 9px;border-radius:7px;background:var(--purple-bg);color:var(--purple);font-weight:600}
+.meta-time{font-size:12px;color:var(--text-light);display:flex;align-items:center;gap:3px}
+.meta-diff{font-size:12px;display:flex;align-items:center;gap:3px}
+.skill-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.skill-tag{font-size:10px;padding:3px 7px;border-radius:5px;background:var(--bg);color:var(--text-light);border:1px solid var(--card-border)}
+.btn-download{display:block;width:100%;padding:12px;background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.3s;text-align:center}
+.btn-download:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(108,52,131,0.35);color:#fff}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn-row button,.btn-row a{flex:1;padding:9px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center;border:none}
+.btn-fav{background:var(--purple-bg);color:var(--purple);border:2px solid var(--purple)!important}
+.btn-fav:hover,.btn-fav.active{background:var(--red);color:#fff;border-color:var(--red)!important}
+.btn-done{background:var(--bg);color:var(--text);border:2px solid var(--card-border)!important}
+.btn-done:hover,.btn-done.active{background:var(--green);color:#fff;border-color:var(--green)!important}
+.btn-print{background:var(--bg);color:var(--text);border:2px solid var(--card-border)!important}
+.btn-print:hover{border-color:var(--purple)!important;color:var(--purple)}
+.detail-nav{display:flex;gap:8px;margin-top:10px}
+.detail-nav a{flex:1;padding:8px;text-align:center;background:var(--purple-bg);border-radius:9px;font-size:12px;font-weight:600;transition:all 0.2s}
+.detail-nav a:hover{background:var(--purple);color:#fff}
+.detail-nav a.disabled{opacity:0.3;pointer-events:none}
+
+/* RELATED */
+.related-section{margin-top:16px}
+.related-section h4{font-size:14px;font-weight:700;color:var(--purple);margin-bottom:10px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.related-card{background:var(--card);border-radius:9px;overflow:hidden;cursor:pointer;transition:all 0.2s;box-shadow:var(--shadow)}
+.related-card:hover{transform:translateY(-2px)}
+.related-card .r-thumb{width:100%;aspect-ratio:2484/3509;overflow:hidden}
+.related-card .r-thumb img{width:100%;height:100%;object-fit:cover}
+.related-card .r-info{padding:6px 8px}
+.related-card .r-title{font-size:11px;font-weight:700;line-height:1.3}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;display:none;align-items:center;justify-content:center;padding:40px;animation:fadeIn 0.2s ease}
+.lightbox.active{display:flex}
+.lightbox img{max-height:90vh;max-width:90vw;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.lightbox .lb-close{position:absolute;top:16px;right:20px;background:rgba(255,255,255,0.15);color:#fff;border:none;width:42px;height:42px;border-radius:50%;font-size:20px;cursor:pointer;transition:all 0.2s}
+.lightbox .lb-close:hover{background:rgba(255,255,255,0.3);transform:rotate(90deg)}
+.lightbox .lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:22px;cursor:pointer;transition:all 0.2s}
+.lightbox .lb-nav:hover{background:rgba(255,255,255,0.3)}
+.lightbox .lb-prev{left:20px}
+.lightbox .lb-next{right:20px}
+.lightbox .lb-caption{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:#fff;font-size:14px;font-weight:600;background:rgba(0,0,0,0.4);padding:7px 18px;border-radius:18px}
+
+/* ABOUT / GUIDE */
+.about-hero{background:linear-gradient(135deg,var(--purple-bg),#E8DAEF);border-radius:var(--radius);padding:36px;margin:24px 0;text-align:center}
+.about-hero h2{font-size:26px;color:var(--purple);margin-bottom:10px}
+.about-hero p{font-size:15px;color:var(--text);max-width:680px;margin:0 auto;line-height:1.8}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.feature-card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);text-align:center}
+.feature-card .f-icon{font-size:34px;margin-bottom:10px}
+.feature-card h3{font-size:16px;color:var(--purple);margin-bottom:6px}
+.feature-card p{font-size:13px;color:var(--text-light);line-height:1.7}
+
+/* GUIDE */
+.guide-section{margin-bottom:32px}
+.guide-section h3{font-size:18px;font-weight:800;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.guide-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.guide-card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);border-left:4px solid var(--purple)}
+.guide-card h4{font-size:15px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.guide-card p{font-size:13px;color:var(--text-light);line-height:1.7}
+.guide-card ul{margin-left:16px;margin-top:4px}
+.guide-card li{font-size:13px;color:var(--text-light);margin-bottom:3px;line-height:1.6}
+.faq-item{background:var(--card);border-radius:11px;padding:14px 18px;margin-bottom:8px;box-shadow:var(--shadow);cursor:pointer;transition:all 0.2s}
+.faq-item:hover{box-shadow:var(--shadow-hover)}
+.faq-q{font-size:14px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center}
+.faq-q .arrow{transition:transform 0.3s;color:var(--purple)}
+.faq-item.open .faq-q .arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease;font-size:13px;color:var(--text-light);line-height:1.7}
+.faq-item.open .faq-a{max-height:300px;padding-top:8px}
+
+/* GAMES */
+.game-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.game-card{background:var(--card);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:all 0.3s;border-left:4px solid var(--purple)}
+.game-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.game-card .gc-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.game-card .gc-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.game-card h4{font-size:17px;font-weight:700}
+.game-card .gc-meta{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.game-card .gc-meta span{font-size:11px;padding:3px 8px;border-radius:7px;background:var(--purple-bg);color:var(--purple);font-weight:600}
+.game-card .gc-desc{font-size:13px;color:var(--text-light);margin-bottom:8px;line-height:1.6}
+.game-card .gc-how{font-size:13px;color:var(--text);line-height:1.7}
+.game-card .gc-how li{margin-bottom:3px;margin-left:16px}
+
+/* PLANS */
+.plan-tabs{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.plan-tab{padding:10px 20px;border-radius:11px;border:2px solid var(--card-border);background:var(--card);color:var(--text);font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.plan-tab.active{border-color:var(--purple);background:var(--purple);color:#fff}
+.plan-day{background:var(--card);border-radius:var(--radius);padding:16px 20px;margin-bottom:10px;box-shadow:var(--shadow);display:grid;grid-template-columns:60px 1fr;gap:16px;align-items:start}
+.plan-day .day-num{width:50px;height:50px;border-radius:14px;background:var(--purple-bg);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.plan-day .day-content h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.plan-day .day-pages{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.plan-day .day-page{font-size:11px;padding:3px 8px;border-radius:7px;background:var(--bg);color:var(--text-light);border:1px solid var(--card-border);cursor:pointer;transition:all 0.2s}
+.plan-day .day-page:hover{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+/* ASSESSMENT */
+.assess-intro{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-bottom:20px;text-align:center}
+.assess-intro h3{font-size:20px;color:var(--purple);margin-bottom:8px}
+.assess-intro p{font-size:14px;color:var(--text-light);margin-bottom:16px}
+.assess-dimension{background:var(--card);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;box-shadow:var(--shadow)}
+.assess-dimension h4{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.assess-options{display:flex;gap:8px;flex-wrap:wrap}
+.assess-opt{padding:7px 14px;border-radius:9px;border:2px solid var(--card-border);background:var(--bg);color:var(--text);font-size:13px;cursor:pointer;transition:all 0.2s}
+.assess-opt:hover{border-color:var(--purple)}
+.assess-opt.selected{border-color:var(--purple);background:var(--purple);color:#fff}
+.assess-result{background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-hover);text-align:center}
+.assess-result h3{font-size:22px;color:var(--purple);margin-bottom:16px}
+.radar-wrap{max-width:400px;margin:0 auto 20px}
+.result-bars{text-align:left;max-width:500px;margin:0 auto}
+.result-bar-row{margin-bottom:10px}
+.result-bar-row .bar-label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:4px}
+.result-bar-row .bar-track{height:10px;background:var(--purple-bg);border-radius:5px;overflow:hidden}
+.result-bar-row .bar-fill{height:100%;border-radius:5px;transition:width 0.8s ease}
+
+/* INTERACTIVE GAME AREA */
+.game-area{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin:20px 0;min-height:400px}
+.game-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.game-header h3{font-size:18px;font-weight:800;color:var(--purple)}
+.game-stats{display:flex;gap:16px}
+.game-stat{text-align:center}
+.game-stat .gs-val{font-size:22px;font-weight:800;color:var(--purple)}
+.game-stat .gs-label{font-size:11px;color:var(--text-light)}
+.game-controls{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.game-controls select,.game-controls button{padding:8px 16px;border-radius:9px;border:2px solid var(--card-border);background:var(--card);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;outline:none}
+.game-controls button{background:var(--purple);color:#fff;border-color:var(--purple)}
+.game-controls button:hover{opacity:0.9}
+.game-controls button.secondary{background:var(--bg);color:var(--text);border-color:var(--card-border)}
+
+/* Schulte */
+.schulte-grid{display:grid;gap:6px;max-width:500px;margin:0 auto}
+.schulte-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;background:var(--bg);border:2px solid var(--card-border);border-radius:10px;cursor:pointer;transition:all 0.15s;color:var(--text)}
+.schulte-cell:hover{border-color:var(--purple);background:var(--purple-bg)}
+.schulte-cell.correct{background:var(--green);color:#fff;border-color:var(--green)}
+.schulte-cell.wrong{background:var(--red);color:#fff;border-color:var(--red);animation:shake 0.3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.schulte-next{font-size:14px;color:var(--text-light);text-align:center;margin-bottom:10px}
+.schulte-next strong{font-size:20px;color:var(--purple)}
+
+/* Memory */
+.memory-grid{display:grid;gap:8px;max-width:480px;margin:0 auto}
+.memory-card{aspect-ratio:1;perspective:600px;cursor:pointer}
+.memory-card-inner{position:relative;width:100%;height:100%;transition:transform 0.4s;transform-style:preserve-3d}
+.memory-card.flipped .memory-card-inner{transform:rotateY(180deg)}
+.memory-card-front,.memory-card-back{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:10px;backface-visibility:hidden;font-size:32px}
+.memory-card-front{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff}
+.memory-card-back{background:var(--bg);border:2px solid var(--card-border);transform:rotateY(180deg)}
+.memory-card.matched .memory-card-back{background:var(--green);border-color:var(--green);color:#fff}
+
+/* Stroop */
+.stroop-word{font-size:48px;font-weight:900;text-align:center;padding:40px 20px;letter-spacing:4px}
+.stroop-options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:400px;margin:0 auto}
+.stroop-opt{padding:16px;border-radius:12px;border:3px solid var(--card-border);background:var(--card);color:var(--text);font-size:18px;font-weight:700;cursor:pointer;transition:all 0.15s}
+.stroop-opt:hover{border-color:var(--purple);transform:scale(1.02)}
+.stroop-opt.correct{background:var(--green);color:#fff;border-color:var(--green)}
+.stroop-opt.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* Reaction */
+.reaction-box{width:100%;min-height:300px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;cursor:pointer;transition:background 0.1s;user-select:none}
+.reaction-box.waiting{background:var(--red);color:#fff}
+.reaction-box.ready{background:var(--green);color:#fff}
+.reaction-box.idle{background:var(--purple-bg);color:var(--purple)}
+.reaction-box.result{background:var(--card);color:var(--text);border:2px solid var(--card-border)}
+
+/* Game over overlay */
+.game-over{text-align:center;padding:40px 20px}
+.game-over .go-icon{font-size:60px;margin-bottom:16px}
+.game-over h3{font-size:24px;font-weight:800;color:var(--purple);margin-bottom:12px}
+.game-over .go-stats{display:flex;justify-content:center;gap:32px;margin:20px 0}
+.game-over .go-stat .gs-val{font-size:32px;font-weight:800;color:var(--purple)}
+.game-over .go-stat .gs-label{font-size:13px;color:var(--text-light)}
+.game-over button{padding:12px 28px;border-radius:11px;border:none;background:var(--purple);color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:12px}
+.game-over button:hover{opacity:0.9}
+
+/* CATEGORY HEADER */
+.category-header{padding:28px 0 16px;display:flex;align-items:center;gap:16px}
+.category-header .cat-big-icon{width:62px;height:62px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0}
+.category-header h2{font-size:26px;font-weight:800;color:var(--purple)}
+.category-header p{color:var(--text-light);font-size:13px;margin-top:2px}
+.breadcrumb{padding:16px 0 0;font-size:13px;color:var(--text-light)}
+.breadcrumb a{color:var(--purple)}
+.breadcrumb span{margin:0 6px}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:50px 20px}
+.empty-state .empty-icon{font-size:50px;margin-bottom:14px;opacity:0.5}
+.empty-state h3{font-size:18px;color:var(--text);margin-bottom:6px}
+.empty-state p{font-size:13px;color:var(--text-light);margin-bottom:16px}
+.empty-state a{display:inline-block;padding:9px 22px;background:var(--purple);color:#fff;border-radius:9px;font-size:13px;font-weight:700}
+
+/* BACK TO TOP */
+.back-to-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--purple);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 4px 14px rgba(108,52,131,0.4);opacity:0;visibility:hidden;transition:all 0.3s;z-index:50;display:flex;align-items:center;justify-content:center}
+.back-to-top.show{opacity:1;visibility:visible}
+.back-to-top:hover{transform:translateY(-3px)}
+
+/* FOOTER */
+.footer{background:var(--purple);color:rgba(255,255,255,0.8);padding:32px 20px 16px;margin-top:40px}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+.footer h4{color:#fff;font-size:14px;margin-bottom:10px}
+.footer p{font-size:12px;line-height:1.8}
+.footer ul{list-style:none}
+.footer li{margin-bottom:6px}
+.footer a{color:rgba(255,255,255,0.75);font-size:12px}
+.footer a:hover{color:#fff}
+.footer-bottom{max-width:1200px;margin:16px auto 0;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);text-align:center;font-size:11px;color:rgba(255,255,255,0.5)}
+
+@media(max-width:1024px){
+  .category-grid{grid-template-columns:repeat(3,1fr)}
+  .page-grid{grid-template-columns:repeat(3,1fr)}
+  .interactive-grid{grid-template-columns:repeat(2,1fr)}
+  .detail-layout{grid-template-columns:1fr}
+  .detail-sidebar{position:static}
+  .related-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .daily-pick{grid-template-columns:140px 1fr}
+  .daily-pick .dp-action{grid-column:1/-1;flex-direction:row;justify-content:center}
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .navbar{padding:0 12px;height:54px}
+  .nav-links{display:none}
+  .nav-search input{width:80px}
+  .hero{padding:32px 16px 44px}
+  .hero h1{font-size:24px}
+  .hero p{font-size:13px}
+  .hero-stats{gap:16px}
+  .hero-stat .num{font-size:22px}
+  .category-grid{grid-template-columns:repeat(2,1fr)}
+  .page-grid{grid-template-columns:repeat(2,1fr)}
+  .interactive-grid{grid-template-columns:repeat(2,1fr)}
+  .feature-grid{grid-template-columns:1fr}
+  .guide-cards{grid-template-columns:1fr}
+  .game-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr}
+  .section-title{font-size:20px}
+  .daily-pick{grid-template-columns:1fr;text-align:center}
+  .daily-pick .dp-thumb{margin:0 auto}
+  .about-hero{padding:24px 16px}
+  .about-hero h2{font-size:22px}
+  .related-grid{grid-template-columns:repeat(2,1fr)}
+  .stroop-options{grid-template-columns:1fr}
+}
+
+/* ===== NEW GAMES ===== */
+/* Whack-a-mole */
+.whack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:420px;margin:0 auto}
+.whack-hole{aspect-ratio:1;background:linear-gradient(180deg,#8B6F47 0%,#6B4F2A 100%);border-radius:50% 50% 12px 12px;position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:flex-end;justify-content:center}
+.whack-hole::after{content:'';position:absolute;bottom:0;left:0;right:0;height:30%;background:radial-gradient(ellipse at center,rgba(0,0,0,0.4) 0%,transparent 70%)}
+.whack-mole{font-size:42px;transform:translateY(100%);transition:transform 0.15s ease;position:relative;z-index:1;line-height:1}
+.whack-hole.active .whack-mole{transform:translateY(10%)}
+.whack-hole.hit .whack-mole{transform:translateY(10%) scale(0.8);filter:brightness(1.5)}
+.whack-hole.bomb .whack-mole{transform:translateY(10%)}
+
+/* Number sort */
+.sort-area{display:flex;flex-direction:column;align-items:center;gap:16px}
+.sort-slots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:70px;padding:10px;background:var(--purple-bg);border-radius:12px;max-width:500px}
+.sort-slot{width:56px;height:56px;border:2px dashed var(--card-border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--text-light);background:var(--card)}
+.sort-slot.filled{border-style:solid;border-color:var(--purple);background:var(--purple);color:#fff}
+.sort-numbers{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:500px}
+.sort-num{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;background:linear-gradient(135deg,var(--blue),#5DADE2);color:#fff;cursor:pointer;transition:all 0.15s;box-shadow:0 3px 8px rgba(52,152,219,0.3)}
+.sort-num:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(52,152,219,0.4)}
+.sort-num.used{opacity:0.3;pointer-events:none;transform:scale(0.9)}
+
+/* Color memory (Simon) */
+.simon-board{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:320px;margin:0 auto}
+.simon-pad{aspect-ratio:1;border-radius:20px;cursor:pointer;transition:all 0.15s;opacity:0.6}
+.simon-pad.active{opacity:1;transform:scale(1.05);box-shadow:0 0 30px currentColor}
+.simon-pad[data-c="r"]{background:#E74C3C;color:#E74C3C}
+.simon-pad[data-c="b"]{background:#3498DB;color:#3498DB}
+.simon-pad[data-c="g"]{background:#27AE60;color:#27AE60}
+.simon-pad[data-c="y"]{background:#F1C40F;color:#F1C40F}
+.simon-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;background:var(--card);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--purple);box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:2;text-align:center}
+.simon-wrap{position:relative;max-width:320px;margin:0 auto}
+
+/* ===== PROFILE / ARCHIVE ===== */
+.profile-header{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff;padding:32px 20px;border-radius:0 0 24px 24px;margin:0 -20px 20px;text-align:center}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 12px;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.profile-name{font-size:24px;font-weight:800;margin-bottom:4px}
+.profile-age{font-size:14px;opacity:0.85}
+.profile-switch{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.profile-chip{padding:6px 14px;border-radius:20px;background:rgba(255,255,255,0.2);color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;border:2px solid transparent}
+.profile-chip.active{background:#fff;color:var(--purple);border-color:#fff}
+.profile-chip.add{background:transparent;border:2px dashed rgba(255,255,255,0.5)}
+.profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.profile-stat{background:var(--card);border-radius:var(--radius);padding:16px;text-align:center;box-shadow:var(--shadow)}
+.profile-stat .ps-val{font-size:28px;font-weight:800;color:var(--purple)}
+.profile-stat .ps-label{font-size:12px;color:var(--text-light);margin-top:2px}
+.profile-section{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.profile-section h3{font-size:16px;font-weight:800;color:var(--purple);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.data-actions{display:flex;gap:10px;flex-wrap:wrap}
+.data-btn{padding:10px 18px;border-radius:10px;border:2px solid var(--card-border);background:var(--card);color:var(--text);font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.data-btn:hover{border-color:var(--purple);color:var(--purple)}
+.data-btn.primary{background:var(--purple);color:#fff;border-color:var(--purple)}
+.data-btn.danger{border-color:var(--red);color:var(--red)}
+.data-btn.danger:hover{background:var(--red);color:#fff}
+
+/* ===== ENHANCED UI ===== */
+.interactive-card{position:relative;overflow:hidden}
+.interactive-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--ic,var(--purple));opacity:0;transition:opacity 0.3s}
+.interactive-card:hover::before{opacity:1}
+.page-card{transition:all 0.25s cubic-bezier(0.4,0,0.2,1)}
+.page-card:hover{transform:translateY(-4px)}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 3px 10px rgba(108,52,131,0.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(108,52,131,0.35)}
+.btn-ghost{background:transparent;color:var(--purple);border:2px solid var(--purple);padding:8px 18px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.btn-ghost:hover{background:var(--purple);color:#fff}
+.category-card{transition:all 0.25s cubic-bezier(0.4,0,0.2,1)}
+.category-card:hover{transform:translateY(-3px) scale(1.02)}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-logo" onclick="navigate('#/')"><div class="logo-icon">🎯</div><span>专注力训练乐园</span></div>
+  <div class="nav-links" id="navLinks">
+    <a href="#/" data-route="home">首页</a>
+    <a href="#/interactive" data-route="interactive">互动训练</a>
+    <a href="#/category/all" data-route="all">打印材料</a>
+    <a href="#/games" data-route="games">亲子游戏</a>
+    <a href="#/plan" data-route="plan">训练计划</a>
+    <a href="#/assessment" data-route="assessment">能力测评</a>
+    <a href="#/profile" data-route="profile">我的档案</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-search"><input type="text" id="searchInput" placeholder="搜索..." onkeydown="if(event.key==='Enter')doSearch()"><button onclick="doSearch()">🔍</button></div>
+    <button class="icon-btn" title="随机一页" onclick="randomPage()">🎲</button>
+    <button class="icon-btn" title="我的收藏" onclick="navigate('#/favorites')">❤️<span class="badge" id="favBadge" style="display:none">0</span></button>
+    <button class="icon-btn" title="深色模式" onclick="toggleTheme()" id="themeBtn">🌙</button>
+  </div>
+</nav>
+<main id="app" class="container"></main>
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();lbNav(-1)">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();lbNav(1)">›</button>
+  <div class="lb-caption" id="lbCaption"></div>
+</div>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<footer class="footer">
+  <div class="footer-inner">
+    <div><h4>🎯 专注力训练乐园</h4><p>专为3-6岁幼儿设计的综合专注力训练平台，包含50页打印材料、4款互动训练、10个亲子游戏和科学训练计划，让孩子在游戏中提升专注力。</p></div>
+    <div><h4>训练平台</h4><ul><li><a href="#/interactive">互动训练</a></li><li><a href="#/category/all">打印材料</a></li><li><a href="#/games">亲子游戏</a></li><li><a href="#/plan">训练计划</a></li></ul></div>
+    <div><h4>能力分类</h4><ul><li><a href="#/category/1">运笔与精细动作</a></li><li><a href="#/category/2">颜色认知</a></li><li><a href="#/category/3">数字与数学</a></li><li><a href="#/category/4">观察力训练</a></li></ul></div>
+    <div><h4>快速链接</h4><ul><li><a href="#/">首页</a></li><li><a href="#/assessment">能力测评</a></li><li><a href="#/favorites">我的收藏</a></li><li><a href="#/about">关于本站</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">© 2026 专注力训练乐园 · 幼儿专注力训练综合平台 · 仅供个人非商业使用</div>
+</footer>
+<script>
+// ========== DATA ==========
+const CATEGORIES=[
+{id:1,name:'运笔与精细动作',icon:'✏️',color:'#E74C3C',bg:'#FDEDEC',desc:'练习运笔控制、手眼协调和精细动作'},
+{id:2,name:'颜色认知',icon:'🎨',color:'#9B59B6',bg:'#F5EEF8',desc:'认识颜色、颜色混合、颜色对应编码'},
+{id:3,name:'数字与数学',icon:'🔢',color:'#3498DB',bg:'#EBF5FB',desc:'数字识别、计数、比较、排序、分解'},
+{id:4,name:'观察力训练',icon:'👀',color:'#E67E22',bg:'#FEF5E7',desc:'找相同、找不同、找隐藏、影子配对'},
+{id:5,name:'逻辑与规律',icon:'🧩',color:'#1ABC9C',bg:'#E8F8F5',desc:'发现规律、演绎推理、分类归纳'},
+{id:6,name:'空间与图形',icon:'📐',color:'#F39C12',bg:'#FEF9E7',desc:'图形认知、对称、旋转、空间感知'},
+{id:7,name:'规划与执行',icon:'🗺️',color:'#27AE60',bg:'#E9F7EF',desc:'走迷宫、路线规划、执行功能'},
+{id:8,name:'综合认知',icon:'🌟',color:'#E91E63',bg:'#FDEDEC',desc:'情绪认知、常识配对、方向感知'},
+];
+const DIFF={1:'入门',2:'进阶',3:'挑战'};
+const DIFF_C={1:'#27AE60',2:'#F39C12',3:'#E74C3C'};
+const DIFF_S={1:'⭐',2:'⭐⭐',3:'⭐⭐⭐'};
+const PAGES=[
+{num:'01',title:'线条小画家',desc:'认识5种线条，按颜色画对应线条',cat:1,diff:1,time:'5-10分钟',skills:['运笔控制','颜色认知']},
+{num:'02',title:'开口找方向',desc:'观察C形开口方向按图例涂色',cat:8,diff:2,time:'5-10分钟',skills:['方向感知','观察力']},
+{num:'03',title:'颜色箭头',desc:'颜色对应箭头方向',cat:2,diff:2,time:'5-10分钟',skills:['颜色认知','方向感知']},
+{num:'04',title:'数字追踪',desc:'沿曲线追踪找到对应颜色',cat:1,diff:1,time:'5-10分钟',skills:['视觉追踪','运笔控制']},
+{num:'05',title:'数字甜甜圈',desc:'按数字对应颜色涂色',cat:2,diff:1,time:'5-10分钟',skills:['数字识别','颜色对应']},
+{num:'06',title:'火眼金睛',desc:'每行找不同',cat:4,diff:2,time:'5-10分钟',skills:['观察力','细节辨别']},
+{num:'07',title:'规律小侦探',desc:'排序规律填空',cat:5,diff:3,time:'10-15分钟',skills:['逻辑推理','规律发现']},
+{num:'08',title:'点阵模仿秀',desc:'照着点阵图形复制',cat:1,diff:2,time:'10-15分钟',skills:['空间感知','精细动作']},
+{num:'09',title:'点数配对',desc:'数圆点数量涂对应颜色',cat:3,diff:1,time:'5-10分钟',skills:['计数','数量认知']},
+{num:'10',title:'形状密码',desc:'颜色×形状编码表',cat:5,diff:3,time:'10-15分钟',skills:['演绎推理','二维编码']},
+{num:'11',title:'同色连连看',desc:'相同颜色连线不交叉',cat:7,diff:2,time:'10-15分钟',skills:['空间规划','问题解决']},
+{num:'12',title:'彩色气球',desc:'按数字给气球涂色',cat:2,diff:1,time:'5-10分钟',skills:['数字识别','颜色对应']},
+{num:'13',title:'箭头指方向',desc:'按箭头方向涂对应颜色',cat:5,diff:2,time:'5-10分钟',skills:['方向认知','颜色对应']},
+{num:'14',title:'彩色数字格',desc:'按方框颜色填对应数字',cat:2,diff:2,time:'5-10分钟',skills:['颜色编码','工作记忆']},
+{num:'15',title:'镜像小画家',desc:'以虚线为轴镜像涂色',cat:6,diff:3,time:'10-15分钟',skills:['对称感知','精细动作']},
+{num:'16',title:'数字连点画',desc:'按数字顺序连点成图',cat:1,diff:1,time:'5-10分钟',skills:['数序认知','运笔控制']},
+{num:'17',title:'鞋子画线条',desc:'按鞋子颜色画对应线条',cat:7,diff:2,time:'5-10分钟',skills:['颜色对应','运笔控制']},
+{num:'18',title:'数字躲猫猫',desc:'找出缺失的数字',cat:3,diff:2,time:'5-10分钟',skills:['数序','推理']},
+{num:'19',title:'圆里藏图形',desc:'按颜色在圆里画对应图形',cat:2,diff:2,time:'10-15分钟',skills:['颜色对应','图形认知']},
+{num:'20',title:'苹果大丰收',desc:'数苹果数量涂对应颜色',cat:3,diff:1,time:'5-10分钟',skills:['计数','颜色对应']},
+{num:'21',title:'走迷宫',desc:'从起点沿通道走到终点',cat:7,diff:2,time:'10-15分钟',skills:['视觉追踪','空间规划']},
+{num:'22',title:'找相同',desc:'每行找出两个完全相同的图形',cat:4,diff:1,time:'5-10分钟',skills:['观察力','视觉辨别']},
+{num:'23',title:'影子配对',desc:'给图形找到对应的影子',cat:4,diff:2,time:'5-10分钟',skills:['视觉感知','形状认知']},
+{num:'24',title:'比多少',desc:'比较两堆物品的多少',cat:3,diff:1,time:'5-10分钟',skills:['数量比较','计数']},
+{num:'25',title:'图形分类',desc:'把图形按特征放到分类盒',cat:6,diff:2,time:'5-10分钟',skills:['分类逻辑','形状认知']},
+{num:'26',title:'数字描红',desc:'沿虚线描写数字',cat:1,diff:1,time:'5-10分钟',skills:['精细动作','数字认知']},
+{num:'27',title:'拼图还原',desc:'观察参考图把拼图还原',cat:6,diff:3,time:'10-15分钟',skills:['空间感知','问题解决']},
+{num:'28',title:'颜色混合',desc:'两种颜色混合变成什么',cat:2,diff:2,time:'5-10分钟',skills:['颜色认知','逻辑推理']},
+{num:'29',title:'序数排队',desc:'回答第几个是谁的问题',cat:3,diff:2,time:'5-10分钟',skills:['序数认知','观察力']},
+{num:'30',title:'找隐藏',desc:'在大图中找出隐藏的图形',cat:4,diff:3,time:'10-15分钟',skills:['视觉搜索','注意力']},
+{num:'31',title:'大小排序',desc:'按从小到大排序',cat:3,diff:1,time:'5-10分钟',skills:['量的比较','逻辑排序']},
+{num:'32',title:'图形重叠',desc:'两个图形重叠后变成什么',cat:6,diff:3,time:'10-15分钟',skills:['空间感知','图形认知']},
+{num:'33',title:'数字分解',desc:'一个总数分成两部分',cat:3,diff:2,time:'10-15分钟',skills:['数的分解','数学思维']},
+{num:'34',title:'表情配对',desc:'给表情找到对应场景',cat:8,diff:2,time:'5-10分钟',skills:['情绪认知','常识配对']},
+{num:'35',title:'路线规划',desc:'从A到B避开障碍画路线',cat:7,diff:3,time:'10-15分钟',skills:['空间规划','执行功能']},
+{num:'36',title:'对称补全',desc:'照着左边补全右边对称部分',cat:6,diff:2,time:'10-15分钟',skills:['对称感知','精细动作']},
+{num:'37',title:'数数涂色',desc:'数到几就涂几个',cat:1,diff:1,time:'5-10分钟',skills:['计数','精细动作']},
+{num:'38',title:'图形类比',desc:'观察关系推导答案',cat:6,diff:3,time:'10-15分钟',skills:['类比推理','逻辑思维']},
+{num:'39',title:'天气配对',desc:'天气和对应物品配对',cat:8,diff:1,time:'5-10分钟',skills:['常识认知','配对能力']},
+{num:'40',title:'数字接龙',desc:'按规律填数字',cat:3,diff:2,time:'5-10分钟',skills:['数序','规律发现']},
+{num:'41',title:'找规律涂色',desc:'按颜色规律继续涂色',cat:2,diff:2,time:'5-10分钟',skills:['规律发现','颜色认知']},
+{num:'42',title:'部分整体',desc:'一个东西属于哪一类',cat:5,diff:2,time:'5-10分钟',skills:['分类思维','联想能力']},
+{num:'43',title:'比高矮',desc:'比较高矮并排序',cat:5,diff:1,time:'5-10分钟',skills:['量的比较','排序']},
+{num:'44',title:'图形旋转',desc:'图形旋转后是什么样',cat:6,diff:3,time:'10-15分钟',skills:['空间旋转','图形认知']},
+{num:'45',title:'数数连线',desc:'数量和数字连线',cat:3,diff:1,time:'5-10分钟',skills:['数物对应','计数']},
+{num:'46',title:'表情模仿',desc:'照着表情画出来',cat:1,diff:2,time:'10-15分钟',skills:['精细动作','情绪认知']},
+{num:'47',title:'分类收纳',desc:'物品按颜色分类收纳',cat:6,diff:2,time:'5-10分钟',skills:['分类逻辑','颜色认知']},
+{num:'48',title:'数字比大小',desc:'比较数字大小填符号',cat:3,diff:2,time:'5-10分钟',skills:['数学比较','数字认知']},
+{num:'49',title:'走路径',desc:'按指令在格子里走',cat:7,diff:3,time:'10-15分钟',skills:['方位认知','执行功能']},
+{num:'50',title:'找相同配对',desc:'找出6对相同图案用线连起来',cat:4,diff:2,time:'10-15分钟',skills:['观察力','视觉搜索']},
+{num:'51',title:'数字涂色画',desc:'按数字给每个区域涂上对应颜色',cat:2,diff:1,time:'10-15分钟',skills:['数字识别','颜色对应']},
+{num:'52',title:'小迷宫探险',desc:'从起点出发找到通往终点的路',cat:7,diff:2,time:'10-15分钟',skills:['空间规划','视觉追踪']},
+{num:'53',title:'火眼金睛找不同',desc:'仔细观察两幅图找出5处不同',cat:4,diff:2,time:'10-15分钟',skills:['观察力','细节辨别']},
+{num:'54',title:'数字连点画',desc:'按1到15的顺序连接各点',cat:1,diff:1,time:'10-15分钟',skills:['数序认知','运笔控制']},
+{num:'55',title:'数数涂色乐',desc:'数出每组物品数量涂上对应颜色',cat:3,diff:1,time:'10-15分钟',skills:['计数','颜色对应']},
+{num:'56',title:'图形拼拼乐',desc:'把碎片拼成完整的图形',cat:6,diff:2,time:'10-15分钟',skills:['空间感知','问题解决']},
+{num:'57',title:'记忆小侦探',desc:'观察后回忆缺少的物品',cat:8,diff:2,time:'10-15分钟',skills:['视觉记忆','观察力']},
+{num:'58',title:'颜色分类站',desc:'把物品放到对应颜色的收纳盒',cat:2,diff:1,time:'5-10分钟',skills:['颜色认知','分类逻辑']},
+{num:'59',title:'大小排排队',desc:'把物品按从小到大的顺序排列',cat:3,diff:1,time:'5-10分钟',skills:['量的比较','逻辑排序']},
+{num:'60',title:'影子找朋友',desc:'给每个物品找到对应的影子',cat:4,diff:2,time:'5-10分钟',skills:['视觉感知','形状认知']},
+];
+
+// 交互式训练
+const INTERACTIVE=[
+{id:'schulte',name:'舒尔特方格',icon:'🔢',desc:'按顺序点击数字，训练视觉搜索和注意力广度',color:'#3498DB',bg:'#EBF5FB',tag:'注意力'},
+{id:'memory',name:'记忆翻翻乐',icon:'🃏',desc:'翻转卡片找配对，训练工作记忆和专注力',color:'#9B59B6',bg:'#F5EEF8',tag:'记忆力'},
+{id:'stroop',name:'颜色干扰测试',icon:'🎨',desc:'选择文字的颜色而非词义，训练注意力控制',color:'#E67E22',bg:'#FEF5E7',tag:'抗干扰'},
+{id:'reaction',name:'反应力训练',icon:'⚡',desc:'尽快点击变色区域，训练反应速度和注意力',color:'#E74C3C',bg:'#FDEDEC',tag:'反应力'},
+{id:'whack',name:'打地鼠',icon:'🔨',desc:'地鼠随机出现，快速点击计分，训练反应和注意力',color:'#8B6F47',bg:'#F5EFE0',tag:'反应力'},
+{id:'sort',name:'数字排序',icon:'🔢',desc:'把打乱的数字按从小到大排列，训练数序和逻辑',color:'#16A085',bg:'#E8F8F5',tag:'数序逻辑'},
+{id:'simon',name:'颜色记忆',icon:'🎵',desc:'记住颜色闪烁顺序并复现，训练工作记忆',color:'#D35400',bg:'#FDF2E9',tag:'记忆力'},
+];
+
+// 亲子游戏
+const GAMES=[
+{id:1,name:'木头人',icon:'🧍',age:'3-6岁',time:'5-10分钟',color:'#E74C3C',bg:'#FDEDEC',desc:'经典的"一二三木头人"游戏，训练孩子的自我控制能力和注意力。',how:['家长喊"一二三，木头人"，孩子在走动中突然停住','保持静止姿势，谁先动谁就输','可以增加难度：单脚站立、闭眼等','每次坚持10-30秒，逐渐延长时间']},
+{id:2,name:'听指令做动作',icon:'👂',age:'3-5岁',time:'5-10分钟',color:'#3498DB',bg:'#EBF5FB',desc:'家长发出指令，孩子快速做出对应动作，训练听觉注意力和反应力。',how:['准备一系列简单指令：摸鼻子、举左手、跳一下等','家长说指令，孩子立刻做动作','逐渐加快语速，增加指令数量（如"先摸鼻子再举左手"）','可以加入反指令："不要摸鼻子"（考验抑制控制）']},
+{id:3,name:'找不同大挑战',icon:'🔍',age:'4-6岁',time:'10分钟',color:'#E67E22',bg:'#FEF5E7',desc:'利用家中物品玩找不同游戏，训练观察力和细节辨别能力。',how:['在桌上摆放5-10件物品，让孩子观察30秒','孩子闭眼，家长悄悄改变一件物品的位置或拿走一件','孩子睁眼说出哪里变了','逐渐增加物品数量和变化的隐蔽性']},
+{id:4,name:'故事接龙',icon:'📖',age:'4-6岁',time:'10-15分钟',color:'#9B59B6',bg:'#F5EEF8',desc:'一人一句编故事，训练注意力、记忆力和语言表达能力。',how:['家长开头说一句话："从前有一只小兔子"','孩子接下一句，家长再接，轮流编故事','可以设定主题（如太空、海洋、恐龙）','鼓励孩子记住前面的情节，保持故事连贯性']},
+{id:5,name:'数字拍手游戏',icon:'👏',age:'4-6岁',time:'5-10分钟',color:'#27AE60',bg:'#E9F7EF',desc:'边数数边拍手，遇到特定数字做不同动作，训练注意力和数感。',how:['从1开始数数，每数一个数拍一下手','遇到3的倍数时不拍手，改为跺脚','遇到5的倍数时不拍手，改为拍腿','逐渐加快速度，增加规则复杂度']},
+{id:6,name:'记忆托盘',icon:'托盘',age:'4-6岁',time:'10分钟',color:'#1ABC9C',bg:'#E8F8F5',desc:'经典的记忆力游戏，观察托盘上的物品然后回忆，训练视觉记忆。',how:['在托盘上放6-10件小物品（钥匙、硬币、笔等）','让孩子观察20-30秒，然后用布盖住','孩子说出记住了哪些物品','逐渐增加物品数量，缩短观察时间']},
+{id:7,name:'红绿灯',icon:'🚦',age:'3-5岁',time:'10分钟',color:'#F39C12',bg:'#FEF9E7',desc:'模拟红绿灯游戏，训练孩子的反应速度和自我控制能力。',how:['家长当红绿灯，喊"绿灯"孩子走，喊"红灯"孩子停','可以加入"黄灯"（减速走）','逐渐加快切换速度','孩子也可以当红绿灯，家长来走（角色互换增加趣味）']},
+{id:8,name:'反向动作',icon:'🔄',age:'4-6岁',time:'5-10分钟',color:'#E91E63',bg:'#FDEDEC',desc:'家长做动作，孩子做相反的动作，训练抑制控制和注意力。',how:['家长举左手，孩子举右手','家长站起来，孩子蹲下去','家长点头，孩子摇头','动作越来越快，考验孩子的反应和抑制能力']},
+{id:9,name:'声音侦探',icon:'🎧',age:'3-6岁',time:'10分钟',color:'#8E44AD',bg:'#F5EEF8',desc:'闭眼听声音猜是什么，训练听觉注意力和声音辨别能力。',how:['孩子闭上眼睛','家长制造各种声音：敲杯子、揉纸团、拍手、翻书等','孩子猜是什么声音','可以增加难度：同时制造两种声音，让孩子都猜出来']},
+{id:10,name:'专注呼吸',icon:'🧘',age:'3-6岁',time:'3-5分钟',color:'#16A085',bg:'#E8F8F5',desc:'简单的正念呼吸练习，帮助孩子平静下来，提升注意力基础。',how:['和孩子一起坐下，闭上眼睛','想象肚子里有一个气球，吸气时气球变大，呼气时变小','可以用手放在肚子上感受起伏','从1分钟开始，逐渐延长到3-5分钟','适合在训练前或情绪激动时做']},
+];
+
+// 训练计划
+const PLANS={
+'7day':{name:'7天入门计划',desc:'适合刚开始专注力训练的孩子，每天1-2页，轻松入门',days:[
+{d:1,theme:'运笔初体验',pages:['01','04']},
+{d:2,theme:'颜色大发现',pages:['05','12']},
+{d:3,theme:'数字小能手',pages:['09','20']},
+{d:4,theme:'眼力大挑战',pages:['06','22']},
+{d:5,theme:'空间小侦探',pages:['08','25']},
+{d:6,theme:'迷宫探险',pages:['21','11']},
+{d:7,theme:'综合大闯关',pages:['16','37']},
+]},
+'14day':{name:'14天进阶计划',desc:'适合有一定基础的孩子，每天2页，难度逐步提升',days:[
+{d:1,theme:'运笔强化',pages:['01','26']},
+{d:2,theme:'颜色编码',pages:['03','14']},
+{d:3,theme:'数字进阶',pages:['18','24']},
+{d:4,theme:'观察训练',pages:['23','06']},
+{d:5,theme:'规律发现',pages:['07','40']},
+{d:6,theme:'空间感知',pages:['15','32']},
+{d:7,theme:'规划执行',pages:['21','35']},
+{d:8,theme:'图形认知',pages:['25','44']},
+{d:9,theme:'记忆训练',pages:['30','10']},
+{d:10,theme:'精细动作',pages:['37','46']},
+{d:11,theme:'数学思维',pages:['33','48']},
+{d:12,theme:'逻辑推理',pages:['38','42']},
+{d:13,theme:'综合应用',pages:['19','50']},
+{d:14,theme:'成果检验',pages:['27','49']},
+]},
+'30day':{name:'30天挑战计划',desc:'系统训练方案，每天2-3页，全面提升8大能力维度',days:[
+{d:1,theme:'运笔基础',pages:['01','04']},
+{d:2,theme:'颜色入门',pages:['05','12']},
+{d:3,theme:'数字入门',pages:['09','20']},
+{d:4,theme:'观察入门',pages:['06','22']},
+{d:5,theme:'空间入门',pages:['08','16']},
+{d:6,theme:'复习日',pages:['01','09','06']},
+{d:7,theme:'运笔进阶',pages:['17','26']},
+{d:8,theme:'颜色进阶',pages:['03','14']},
+{d:9,theme:'数字进阶',pages:['18','24']},
+{d:10,theme:'观察进阶',pages:['23','30']},
+{d:11,theme:'空间进阶',pages:['15','25']},
+{d:12,theme:'逻辑入门',pages:['07','13']},
+{d:13,theme:'复习日',pages:['03','18','23']},
+{d:14,theme:'规划入门',pages:['21','11']},
+{d:15,theme:'图形进阶',pages:['27','32']},
+{d:16,theme:'数字高级',pages:['29','31']},
+{d:17,theme:'颜色高级',pages:['19','28']},
+{d:18,theme:'观察高级',pages:['50','06']},
+{d:19,theme:'逻辑高级',pages:['10','38']},
+{d:20,theme:'复习日',pages:['21','27','10']},
+{d:21,theme:'空间高级',pages:['36','44']},
+{d:22,theme:'规划高级',pages:['35','49']},
+{d:23,theme:'精细高级',pages:['37','46']},
+{d:24,theme:'数学高级',pages:['33','48']},
+{d:25,theme:'综合应用',pages:['34','39']},
+{d:26,theme:'复习日',pages:['36','35','33']},
+{d:27,theme:'综合挑战1',pages:['07','15','42']},
+{d:28,theme:'综合挑战2',pages:['30','44','40']},
+{d:29,theme:'综合挑战3',pages:['27','49','38']},
+{d:30,theme:'成果检验',pages:['10','50','35']},
+]},
+};
+
+// 能力测评
+const ASSESSMENT=[
+{dim:'运笔与精细动作',icon:'✏️',color:'#E74C3C',q:['孩子能熟练使用蜡笔涂色吗？','孩子能沿着虚线描出形状吗？','孩子的手眼协调能力如何？']},
+{dim:'颜色认知',icon:'🎨',color:'#9B59B6',q:['孩子能准确识别基本颜色吗？','孩子理解颜色混合的概念吗？','孩子能按颜色进行分类吗？']},
+{dim:'数字与数学',icon:'🔢',color:'#3498DB',q:['孩子能准确数到10吗？','孩子理解数字的大小关系吗？','孩子能进行简单的数的分解吗？']},
+{dim:'观察力',icon:'👀',color:'#E67E22',q:['孩子能快速找出两幅图的不同吗？','孩子注意到细节的能力如何？','孩子能在复杂背景中找到目标吗？']},
+{dim:'逻辑与规律',icon:'🧩',color:'#1ABC9C',q:['孩子能发现简单的排列规律吗？','孩子能进行简单的分类归纳吗？','孩子理解因果关系吗？']},
+{dim:'空间与图形',icon:'📐',color:'#F39C12',q:['孩子能识别基本的几何图形吗？','孩子理解对称的概念吗？','孩子能想象图形旋转后的样子吗？']},
+{dim:'规划与执行',icon:'🗺️',color:'#27AE60',q:['孩子能完成简单的迷宫吗？','孩子能按步骤完成多步任务吗？','孩子能抑制冲动等待指令吗？']},
+{dim:'综合认知',icon:'🌟',color:'#E91E63',q:['孩子能识别基本的情绪表情吗？','孩子理解常见的生活常识吗？','孩子能理解方位词（上下左右）吗？']},
+];
+const ASSESS_OPTS=[{v:1,label:'😟 需加强'},{v:2,label:'😐 一般'},{v:3,label:'😊 不错'},{v:4,label:'🤩 很好'}];
+
+// ========== STORAGE ==========
+function getFav(){try{const k=profileFavKey();let v=localStorage.getItem(k);if(v===null){v=localStorage.getItem('fav_pages')||'[]';if(v!=='[]')localStorage.setItem(k,v)}return JSON.parse(v)}catch(e){return[]}}
+function saveFav(a){localStorage.setItem(profileFavKey(),JSON.stringify(a));updateFavBadge()}
+function isFav(n){return getFav().includes(n)}
+function toggleFav(n){let f=getFav();if(f.includes(n))f=f.filter(x=>x!==n);else f.push(n);saveFav(f);return f.includes(n)}
+function updateFavBadge(){const c=getFav().length;const b=document.getElementById('favBadge');if(b){b.textContent=c;b.style.display=c>0?'flex':'none'}}
+function getDone(){try{const k=profileDoneKey();let v=localStorage.getItem(k);if(v===null){v=localStorage.getItem('done_pages')||'[]';if(v!=='[]')localStorage.setItem(k,v)}return JSON.parse(v)}catch(e){return[]}}
+function saveDone(a){localStorage.setItem(profileDoneKey(),JSON.stringify(a))}
+function isDone(n){return getDone().includes(n)}
+function toggleDone(n){let d=getDone();if(d.includes(n))d=d.filter(x=>x!==n);else d.push(n);saveDone(d);return d.includes(n)}
+
+// ========== THEME ==========
+function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('theme',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙'}
+function initTheme(){if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeBtn').textContent='☀️'}}
+
+// ========== ROUTER ==========
+function navigate(h){window.location.hash=h}
+function getRoute(){return(window.location.hash.replace('#','')||'/').split('/').filter(Boolean)}
+window.addEventListener('hashchange',render);
+window.addEventListener('load',()=>{initTheme();updateFavBadge();render()});
+function setActiveNav(r){document.querySelectorAll('#navLinks a').forEach(a=>a.classList.toggle('active',a.dataset.route===r))}
+
+// ========== RENDER ==========
+function render(){
+  const p=getRoute();const app=document.getElementById('app');app.innerHTML='';
+  if(p.length===0){setActiveNav('home');renderHome(app)}
+  else if(p[0]==='interactive'&&p.length===1){setActiveNav('interactive');renderInteractiveHome(app)}
+  else if(p[0]==='interactive'&&p.length>1){setActiveNav('interactive');renderInteractiveGame(app,p[1])}
+  else if(p[0]==='category'){setActiveNav('all');renderCategory(app,p[1])}
+  else if(p[0]==='page'){renderDetail(app,p[1])}
+  else if(p[0]==='favorites'){renderFavorites(app)}
+  else if(p[0]==='games'){setActiveNav('games');renderGames(app)}
+  else if(p[0]==='plan'){setActiveNav('plan');renderPlan(app)}
+  else if(p[0]==='assessment'){setActiveNav('assessment');renderAssessment(app)}
+  else if(p[0]==='profile'){setActiveNav('profile');renderProfile(app)}
+  else if(p[0]==='about'){renderAbout(app)}
+  else{renderHome(app)}
+  window.scrollTo(0,0);
+}
+
+// ========== HOME ==========
+function renderHome(app){
+  const daily=getDaily();const dc=CATEGORIES.find(c=>c.id===daily.cat);
+  const doneCount=getDone().length;const progress=Math.round(doneCount/PAGES.length*100);
+  const hero=document.createElement('div');hero.style.margin='0 -20px';
+  hero.innerHTML=`<div class="hero"><h1>让孩子在<span class="rainbow">游戏中</span>提升专注力</h1><p>60页打印材料 + 7款互动训练 + 10个亲子游戏，全方位提升幼儿专注力</p><div class="hero-stats"><div class="hero-stat"><span class="num">60+7</span><span class="label">训练内容</span></div><div class="hero-stat"><span class="num">8</span><span class="label">能力维度</span></div><div class="hero-stat"><span class="num">3-6</span><span class="label">适用年龄</span></div><div class="hero-stat"><span class="num">${progress}%</span><span class="label">已完成</span></div></div></div>`;
+  app.appendChild(hero);
+  const dp=document.createElement('div');dp.style.padding='0 20px';
+  dp.innerHTML=`<div class="daily-pick"><div class="dp-thumb" onclick="navigate('#/page/${daily.num}')"><img src="thumbs/page_${daily.num}.jpg" alt="${daily.title}" loading="lazy"></div><div class="dp-info"><span class="dp-tag">📅 今日一练</span><h3>${daily.title}</h3><p>${daily.desc}</p><div class="dp-meta"><span>${dc.icon} ${dc.name}</span><span>${DIFF_S[daily.diff]} ${DIFF[daily.diff]}</span><span>⏱ ${daily.time}</span></div></div><div class="dp-action"><button class="btn-primary" onclick="navigate('#/page/${daily.num}')">开始训练 →</button><button class="btn-ghost" onclick="randomPage()">🎲 换一个</button></div></div>`;
+  app.appendChild(dp);
+  // 互动训练入口
+  const isec=document.createElement('div');isec.className='section';
+  isec.innerHTML=`<div class="section-title"><div class="title-icon" style="background:#EBF5FB">🎮</div>互动训练中心</div><div class="section-subtitle">无需打印，在网页上直接玩的专注力训练游戏，计时计成绩</div><div class="interactive-grid">${INTERACTIVE.map(g=>`<div class="interactive-card" onclick="navigate('#/interactive/${g.id}')" style="--ic:${g.color}"><div class="ic-icon" style="background:${g.bg}">${g.icon}</div><div class="ic-name" style="color:${g.color}">${g.name}</div><div class="ic-desc">${g.desc}</div><span class="ic-tag" style="background:${g.color}">${g.tag}</span></div>`).join('')}</div>`;
+  app.appendChild(isec);
+  // 进度
+  const psec=document.createElement('div');psec.className='section';psec.style.paddingTop='0';
+  psec.innerHTML=`<div class="section-title"><div class="title-icon" style="background:#E9F7EF">📊</div>训练进度</div><div class="section-subtitle">标记已完成的页面，追踪孩子的训练进度</div><div class="daily-pick" style="grid-template-columns:auto 1fr auto;max-width:100%"><div class="progress-ring-wrap"><div class="progress-ring"><svg width="70" height="70"><circle class="ring-bg" cx="35" cy="35" r="30"></circle><circle class="ring-fg" cx="35" cy="35" r="30" stroke-dasharray="${2*Math.PI*30}" stroke-dashoffset="${2*Math.PI*30*(1-progress/100)}"></circle></svg><div class="ring-text">${progress}%</div></div><div class="progress-info"><h4>已完成 ${doneCount}/${PAGES.length} 页</h4><p>在详情页点击"✓ 已完成"标记进度</p></div></div><div></div><div class="dp-action"><button class="btn-primary" onclick="navigate('#/category/all')">继续训练 →</button></div></div>`;
+  app.appendChild(psec);
+  // 分类
+  const csec=document.createElement('div');csec.className='section';csec.style.paddingTop='0';
+  csec.innerHTML=`<div class="section-title"><div class="title-icon" style="background:var(--purple-bg)">📚</div>打印材料分类</div><div class="section-subtitle">50页A4高清打印材料，按能力维度分类</div><div class="category-grid">${CATEGORIES.map(c=>`<div class="category-card" onclick="navigate('#/category/${c.id}')"><div class="cat-icon" style="background:${c.bg}">${c.icon}</div><div class="cat-name" style="color:${c.color}">${c.name}</div><div class="cat-count">${PAGES.filter(p=>p.cat===c.id).length} 页</div></div>`).join('')}</div>`;
+  app.appendChild(csec);
+}
+function getDaily(){const t=new Date();const s=t.getFullYear()*10000+(t.getMonth()+1)*100+t.getDate();return PAGES[s%PAGES.length]}
+
+// ========== INTERACTIVE HOME ==========
+function renderInteractiveHome(app){
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>互动训练</div><div class="category-header"><div class="cat-big-icon" style="background:#EBF5FB">🎮</div><div><h2 style="color:#3498DB">互动训练中心</h2><p>4款网页直接玩的专注力训练游戏，计时计成绩，无需打印</p></div></div><div class="interactive-grid" style="padding-bottom:40px">${INTERACTIVE.map(g=>`<div class="interactive-card" onclick="navigate('#/interactive/${g.id}')"><div class="ic-icon" style="background:${g.bg}">${g.icon}</div><div class="ic-name" style="color:${g.color}">${g.name}</div><div class="ic-desc">${g.desc}</div><span class="ic-tag" style="background:${g.color}">${g.tag}</span></div>`).join('')}</div>`;
+}
+
+// ========== INTERACTIVE GAMES ==========
+function renderInteractiveGame(app,id){
+  const g=INTERACTIVE.find(x=>x.id===id);
+  if(!g){app.innerHTML='<div class="empty-state"><div class="empty-icon">😕</div><h3>游戏不存在</h3><a href="#/interactive">返回互动训练</a></div>';return}
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span><a href="#/interactive">互动训练</a><span>/</span>${g.name}</div><div class="category-header"><div class="cat-big-icon" style="background:${g.bg}">${g.icon}</div><div><h2 style="color:${g.color}">${g.name}</h2><p>${g.desc}</p></div></div><div class="game-area" id="gameArea"></div>`;
+  if(id==='schulte')initSchulte();
+  else if(id==='memory')initMemory();
+  else if(id==='stroop')initStroop();
+  else if(id==='reaction')initReaction();
+  else if(id==='whack')initWhack();
+  else if(id==='sort')initSort();
+  else if(id==='simon')initSimon();
+}
+
+// 舒尔特方格
+let schulteState={};
+function initSchulte(){
+  const area=document.getElementById('gameArea');
+  area.innerHTML=`<div class="game-header"><h3>🔢 舒尔特方格</h3><div class="game-stats"><div class="game-stat"><div class="gs-val" id="schulteTime">0.0</div><div class="gs-label">用时(秒)</div></div><div class="game-stat"><div class="gs-val" id="schulteBest">-</div><div class="gs-label">最佳</div></div></div></div><div class="game-controls"><select id="schulteSize"><option value="3">3×3 入门</option><option value="4" selected>4×4 标准</option><option value="5">5×5 挑战</option></select><button onclick="startSchulte()">开始游戏</button></div><div class="schulte-next" id="schulteNext">点击"开始游戏"开始</div><div class="schulte-grid" id="schulteGrid" style="grid-template-columns:repeat(4,1fr)"></div>`;
+  const best=localStorage.getItem('schulte_best');
+  if(best)document.getElementById('schulteBest').textContent=best+'s';
+}
+function startSchulte(){
+  const size=parseInt(document.getElementById('schulteSize').value);
+  const total=size*size;
+  let nums=Array.from({length:total},(_,i)=>i+1);
+  for(let i=nums.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[nums[i],nums[j]]=[nums[j],nums[i]]}
+  schulteState={nums,next:1,startTime:Date.now(),size,total,timer:null};
+  const grid=document.getElementById('schulteGrid');
+  grid.style.gridTemplateColumns=`repeat(${size},1fr)`;
+  grid.innerHTML=nums.map((n,i)=>`<div class="schulte-cell" data-n="${n}" onclick="clickSchulte(this,${n})">${n}</div>`).join('');
+  document.getElementById('schulteNext').innerHTML=`请点击 <strong>1</strong>`;
+  schulteState.timer=setInterval(()=>{document.getElementById('schulteTime').textContent=((Date.now()-schulteState.startTime)/1000).toFixed(1)},100);
+}
+function clickSchulte(el,n){
+  if(!schulteState.timer)return;
+  if(n===schulteState.next){
+    el.classList.add('correct');
+    schulteState.next++;
+    if(schulteState.next>schulteState.total){
+      clearInterval(schulteState.timer);
+      const time=((Date.now()-schulteState.startTime)/1000).toFixed(1);
+      const best=localStorage.getItem('schulte_best');
+      if(!best||parseFloat(time)<parseFloat(best)){localStorage.setItem('schulte_best',time);document.getElementById('schulteBest').textContent=time+'s'}
+      document.getElementById('schulteNext').innerHTML=`🎉 完成！用时 <strong>${time}秒</strong>`;
+      document.getElementById('gameArea').insertAdjacentHTML('beforeend',`<div class="game-over"><div class="go-icon">🎉</div><h3>太棒了！</h3><div class="go-stats"><div class="go-stat"><div class="gs-val">${time}s</div><div class="gs-label">用时</div></div><div class="go-stat"><div class="gs-val">${schulteState.size}×${schulteState.size}</div><div class="gs-label">难度</div></div></div><button onclick="startSchulte()">再来一次</button></div>`);
+    }else{
+      document.getElementById('schulteNext').innerHTML=`请点击 <strong>${schulteState.next}</strong>`;
+    }
+  }else{
+    el.classList.add('wrong');
+    setTimeout(()=>el.classList.remove('wrong'),300);
+  }
+}
+
+// 记忆翻翻乐
+let memoryState={};
+function initMemory(){
+  const area=document.getElementById('gameArea');
+  const emojis=['🐶','🐱','🐰','🦊','🐻','🐼','🐨','🦁'];
+  area.innerHTML=`<div class="game-header"><h3>🃏 记忆翻翻乐</h3><div class="game-stats"><div class="game-stat"><div class="gs-val" id="memMoves">0</div><div class="gs-label">翻牌次数</div></div><div class="game-stat"><div class="gs-val" id="memTime">0.0</div><div class="gs-label">用时(秒)</div></div></div></div><div class="game-controls"><button onclick="startMemory()">开始游戏</button></div><div class="memory-grid" id="memoryGrid" style="grid-template-columns:repeat(4,1fr)"></div>`;
+  memoryState.emojis=emojis;
+}
+function startMemory(){
+  const pairs=[...memoryState.emojis,...memoryState.emojis];
+  for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]]}
+  memoryState={cards:pairs,flipped:[],matched:0,moves:0,startTime:Date.now(),timer:null,lock:false};
+  const grid=document.getElementById('memoryGrid');
+  grid.innerHTML=pairs.map((e,i)=>`<div class="memory-card" data-i="${i}" data-e="${e}" onclick="flipMemory(${i})"><div class="memory-card-inner"><div class="memory-card-front">❓</div><div class="memory-card-back">${e}</div></div></div>`).join('');
+  document.getElementById('memMoves').textContent='0';
+  memoryState.timer=setInterval(()=>{document.getElementById('memTime').textContent=((Date.now()-memoryState.startTime)/1000).toFixed(1)},100);
+}
+function flipMemory(i){
+  if(memoryState.lock)return;
+  const card=document.querySelector(`.memory-card[data-i="${i}"]`);
+  if(card.classList.contains('flipped')||card.classList.contains('matched'))return;
+  card.classList.add('flipped');
+  memoryState.flipped.push(i);
+  if(memoryState.flipped.length===2){
+    memoryState.moves++;
+    document.getElementById('memMoves').textContent=memoryState.moves;
+    const [a,b]=memoryState.flipped;
+    if(memoryState.cards[a]===memoryState.cards[b]){
+      document.querySelector(`.memory-card[data-i="${a}"]`).classList.add('matched');
+      document.querySelector(`.memory-card[data-i="${b}"]`).classList.add('matched');
+      memoryState.matched++;
+      memoryState.flipped=[];
+      if(memoryState.matched===memoryState.emojis.length){
+        clearInterval(memoryState.timer);
+        const time=((Date.now()-memoryState.startTime)/1000).toFixed(1);
+        document.getElementById('gameArea').insertAdjacentHTML('beforeend',`<div class="game-over"><div class="go-icon">🎉</div><h3>全部配对成功！</h3><div class="go-stats"><div class="go-stat"><div class="gs-val">${memoryState.moves}</div><div class="gs-label">翻牌次数</div></div><div class="go-stat"><div class="gs-val">${time}s</div><div class="gs-label">用时</div></div></div><button onclick="startMemory()">再来一次</button></div>`);
+      }
+    }else{
+      memoryState.lock=true;
+      setTimeout(()=>{
+        document.querySelector(`.memory-card[data-i="${a}"]`).classList.remove('flipped');
+        document.querySelector(`.memory-card[data-i="${b}"]`).classList.remove('flipped');
+        memoryState.flipped=[];memoryState.lock=false;
+      },800);
+    }
+  }
+}
+
+// Stroop
+let stroopState={};
+function initStroop(){
+  const area=document.getElementById('gameArea');
+  area.innerHTML=`<div class="game-header"><h3>🎨 颜色干扰测试</h3><div class="game-stats"><div class="game-stat"><div class="gs-val" id="stroopQ">0/20</div><div class="gs-label">题目</div></div><div class="game-stat"><div class="gs-val" id="stroopScore">0</div><div class="gs-label">正确</div></div></div></div><div class="game-controls"><button onclick="startStroop()">开始测试</button></div><div id="stroopArea"><div style="text-align:center;padding:40px;color:var(--text-light)">点击"开始测试"，选择文字的<strong>颜色</strong>（不是词义）</div></div>`;
+}
+const STROOP_WORDS=[{word:'红色',color:'#E74C3C'},{word:'蓝色',color:'#3498DB'},{word:'绿色',color:'#27AE60'},{word:'黄色',color:'#F1C40F'},{word:'紫色',color:'#9B59B6'},{word:'橙色',color:'#E67E22'}];
+function startStroop(){
+  stroopState={q:0,score:0,startTime:Date.now(),total:20};
+  document.getElementById('stroopArea').innerHTML=`<div class="stroop-word" id="stroopWord"></div><div class="stroop-options" id="stroopOpts"></div>`;
+  nextStroop();
+}
+function nextStroop(){
+  if(stroopState.q>=stroopState.total){
+    const time=((Date.now()-stroopState.startTime)/1000).toFixed(1);
+    const acc=Math.round(stroopState.score/stroopState.total*100);
+    document.getElementById('stroopArea').innerHTML=`<div class="game-over"><div class="go-icon">🎨</div><h3>测试完成！</h3><div class="go-stats"><div class="go-stat"><div class="gs-val">${stroopState.score}/${stroopState.total}</div><div class="gs-label">正确</div></div><div class="go-stat"><div class="gs-val">${acc}%</div><div class="gs-label">正确率</div></div><div class="go-stat"><div class="gs-val">${time}s</div><div class="gs-label">用时</div></div></div><button onclick="startStroop()">再测一次</button></div>`;
+    return;
+  }
+  stroopState.q++;
+  document.getElementById('stroopQ').textContent=`${stroopState.q}/${stroopState.total}`;
+  // 随机选词和颜色（故意不匹配增加干扰）
+  const wordIdx=Math.floor(Math.random()*STROOP_WORDS.length);
+  let colorIdx=Math.floor(Math.random()*STROOP_WORDS.length);
+  while(colorIdx===wordIdx&&Math.random()>0.3)colorIdx=Math.floor(Math.random()*STROOP_WORDS.length);
+  stroopState.correctColor=STROOP_WORDS[colorIdx].color;
+  stroopState.correctName=STROOP_WORDS[colorIdx].word;
+  document.getElementById('stroopWord').textContent=STROOP_WORDS[wordIdx].word;
+  document.getElementById('stroopWord').style.color=STROOP_WORDS[colorIdx].color;
+  // 4个选项
+  let opts=[...STROOP_WORDS].sort(()=>Math.random()-0.5).slice(0,4);
+  if(!opts.find(o=>o.color===stroopState.correctColor))opts[0]=STROOP_WORDS[colorIdx];
+  opts.sort(()=>Math.random()-0.5);
+  document.getElementById('stroopOpts').innerHTML=opts.map(o=>`<button class="stroop-opt" onclick="clickStroop(this,'${o.color}')">${o.word}</button>`).join('');
+}
+function clickStroop(btn,color){
+  const opts=document.querySelectorAll('.stroop-opt');
+  opts.forEach(o=>o.style.pointerEvents='none');
+  if(color===stroopState.correctColor){
+    btn.classList.add('correct');stroopState.score++;
+    document.getElementById('stroopScore').textContent=stroopState.score;
+  }else{
+    btn.classList.add('wrong');
+    opts.forEach(o=>{if(o.textContent===stroopState.correctName)o.classList.add('correct')});
+  }
+  setTimeout(nextStroop,600);
+}
+
+// 反应力
+let reactionState={};
+function initReaction(){
+  const area=document.getElementById('gameArea');
+  area.innerHTML=`<div class="game-header"><h3>⚡ 反应力训练</h3><div class="game-stats"><div class="game-stat"><div class="gs-val" id="reactRound">0/5</div><div class="gs-label">轮次</div></div><div class="game-stat"><div class="gs-val" id="reactAvg">-</div><div class="gs-label">平均(ms)</div></div></div></div><div class="game-controls"><button onclick="startReaction()">开始测试</button></div><div class="reaction-box idle" id="reactBox" onclick="clickReaction()">点击"开始测试"<br>变色后尽快点击</div>`;
+}
+function startReaction(){
+  reactionState={round:0,times:[],waiting:false,ready:false,timeout:null};
+  document.getElementById('reactRound').textContent='0/5';
+  document.getElementById('reactAvg').textContent='-';
+  nextReaction();
+}
+function nextReaction(){
+  if(reactionState.round>=5){
+    const avg=Math.round(reactionState.times.reduce((a,b)=>a+b,0)/reactionState.times.length);
+    document.getElementById('reactAvg').textContent=avg;
+    document.getElementById('reactBox').className='reaction-box result';
+    document.getElementById('reactBox').innerHTML=`<div class="game-over" style="padding:20px"><div class="go-icon">⚡</div><h3>测试完成！</h3><div class="go-stats"><div class="go-stat"><div class="gs-val">${avg}ms</div><div class="gs-label">平均反应</div></div><div class="go-stat"><div class="gs-val">${Math.min(...reactionState.times)}ms</div><div class="gs-label">最快</div></div></div><button onclick="startReaction()">再测一次</button></div>`;
+    return;
+  }
+  reactionState.round++;
+  document.getElementById('reactRound').textContent=`${reactionState.round}/5`;
+  reactionState.waiting=true;reactionState.ready=false;
+  const box=document.getElementById('reactBox');
+  box.className='reaction-box waiting';
+  box.innerHTML='等待...<br>不要点击！';
+  const delay=1500+Math.random()*3000;
+  reactionState.timeout=setTimeout(()=>{
+    reactionState.waiting=false;reactionState.ready=true;
+    reactionState.startTime=Date.now();
+    box.className='reaction-box ready';
+    box.innerHTML='点击！';
+  },delay);
+}
+function clickReaction(){
+  const box=document.getElementById('reactBox');
+  if(reactionState.waiting){
+    clearTimeout(reactionState.timeout);
+    box.className='reaction-box result';
+    box.innerHTML='❌ 太早了！<br>等变绿再点击<br><br><button onclick="startReaction()" style="padding:8px 20px;border-radius:8px;border:none;background:var(--purple);color:#fff;cursor:pointer">重新开始</button>';
+    reactionState.waiting=false;
+    return;
+  }
+  if(reactionState.ready){
+    const rt=Date.now()-reactionState.startTime;
+    reactionState.times.push(rt);
+    reactionState.ready=false;
+    box.className='reaction-box result';
+    box.innerHTML=`✅ ${rt}ms<br><br>准备下一轮...`;
+    setTimeout(nextReaction,800);
+  }
+}
+
+// ===== WHACK-A-MOLE =====
+let whackState={};
+function initWhack(){
+  const area=document.getElementById('gameArea');
+  area.innerHTML=`<div class="game-header"><h3>🔨 打地鼠</h3><div class="game-stats"><div class="game-stat"><div class="gs-val" id="whackScore">0</div><div class="gs-label">得分</div></div><div class="game-stat"><div class="gs-val" id="whackTime">30</div><div class="gs-label">剩余(秒)</div></div><div class="game-stat"><div class="gs-val" id="whackBest">-</div><div class="gs-label">最佳</div></div></div></div><div class="game-controls"><button onclick="startWhack()">开始游戏</button></div><div class="whack-grid" id="whackGrid">${Array.from({length:9},(_,i)=>`<div class="whack-hole" data-i="${i}" onclick="whackClick(${i})"><div class="whack-mole">🐹</div></div>`).join('')}</div>`;
+  const best=localStorage.getItem('whack_best');
+  if(best)document.getElementById('whackBest').textContent=best;
+}
+function startWhack(){
+  whackState={score:0,time:30,interval:null,moleInterval:null,active:-1};
+  document.getElementById('whackScore').textContent='0';
+  document.getElementById('whackTime').textContent='30';
+  document.querySelectorAll('.whack-hole').forEach(h=>h.classList.remove('active','hit','bomb'));
+  whackState.interval=setInterval(()=>{
+    whackState.time--;
+    document.getElementById('whackTime').textContent=whackState.time;
+    if(whackState.time<=0){endWhack()}
+  },1000);
+  spawnMole();
+  whackState.moleInterval=setInterval(spawnMole,800);
+}
+function spawnMole(){
+  document.querySelectorAll('.whack-hole').forEach(h=>h.classList.remove('active','bomb'));
+  const idx=Math.floor(Math.random()*9);
+  const isBomb=Math.random()<0.15;
+  whackState.active=idx;
+  whackState.isBomb=isBomb;
+  const hole=document.querySelector(`.whack-hole[data-i="${idx}"]`);
+  hole.querySelector('.whack-mole').textContent=isBomb?'💣':'🐹';
+  hole.classList.add(isBomb?'bomb':'active');
+}
+function whackClick(i){
+  if(!whackState.interval)return;
+  const hole=document.querySelector(`.whack-hole[data-i="${i}"]`);
+  if(hole.classList.contains('active')||hole.classList.contains('bomb')){
+    if(whackState.isBomb&&i===whackState.active){
+      whackState.score=Math.max(0,whackState.score-2);
+      hole.classList.add('hit');
+    }else if(i===whackState.active){
+      whackState.score++;
+      hole.classList.add('hit');
+    }
+    document.getElementById('whackScore').textContent=whackState.score;
+    hole.classList.remove('active','bomb');
+  }
+}
+function endWhack(){
+  clearInterval(whackState.interval);
+  clearInterval(whackState.moleInterval);
+  document.querySelectorAll('.whack-hole').forEach(h=>h.classList.remove('active','bomb'));
+  const score=whackState.score;
+  const best=localStorage.getItem('whack_best');
+  if(!best||score>parseInt(best)){localStorage.setItem('whack_best',score);document.getElementById('whackBest').textContent=score}
+  document.getElementById('gameArea').insertAdjacentHTML('beforeend',`<div class="game-over"><div class="go-icon">🔨</div><h3>时间到！</h3><div class="go-stats"><div class="go-stat"><div class="gs-val">${score}</div><div class="gs-label">得分</div></div></div><button onclick="startWhack()">再来一次</button></div>`);
+}
+
+// ===== NUMBER SORT =====
+let sortState={};
+function initSort(){
+  const area=document.getElementById('gameArea');
+  area.innerHTML=`<div class="game-header"><h3>🔢 数字排序</h3><div class="game-stats"><div class="game-stat"><div class="gs-val" id="sortTime">0.0</div><div class="gs-label">用时(秒)</div></div><div class="game-stat"><div class="gs-val" id="sortMoves">0</div><div class="gs-label">操作次数</div></div></div></div><div class="game-controls"><select id="sortCount"><option value="5">5个数 入门</option><option value="7" selected>7个数 标准</option><option value="9">9个数 挑战</option></select><button onclick="startSort()">开始游戏</button></div><div class="sort-area"><div class="sort-slots" id="sortSlots"></div><div class="sort-numbers" id="sortNumbers"></div></div>`;
+}
+function startSort(){
+  const count=parseInt(document.getElementById('sortCount').value);
+  let nums=Array.from({length:count},(_,i)=>i+1);
+  for(let i=nums.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[nums[i],nums[j]]=[nums[j],nums[i]]}
+  sortState={nums,placed:[],count,startTime:Date.now(),moves:0,timer:null};
+  document.getElementById('sortSlots').innerHTML=Array.from({length:count},(_,i)=>`<div class="sort-slot" data-slot="${i}">${i+1}</div>`).join('');
+  document.getElementById('sortNumbers').innerHTML=nums.map(n=>`<div class="sort-num" data-n="${n}" onclick="sortClick(${n})">${n}</div>`).join('');
+  document.getElementById('sortMoves').textContent='0';
+  sortState.timer=setInterval(()=>{document.getElementById('sortTime').textContent=((Date.now()-sortState.startTime)/1000).toFixed(1)},100);
+}
+function sortClick(n){
+  if(!sortState.timer)return;
+  const expected=sortState.placed.length+1;
+  sortState.moves++;
+  document.getElementById('sortMoves').textContent=sortState.moves;
+  if(n===expected){
+    sortState.placed.push(n);
+    document.querySelector(`.sort-num[data-n="${n}"]`).classList.add('used');
+    const slot=document.querySelector(`.sort-slot[data-slot="${expected-1}"]`);
+    slot.classList.add('filled');slot.textContent=n;
+    if(sortState.placed.length===sortState.count){
+      clearInterval(sortState.timer);
+      const time=((Date.now()-sortState.startTime)/1000).toFixed(1);
+      document.getElementById('gameArea').insertAdjacentHTML('beforeend',`<div class="game-over"><div class="go-icon">🎉</div><h3>排序完成！</h3><div class="go-stats"><div class="go-stat"><div class="gs-val">${time}s</div><div class="gs-label">用时</div></div><div class="go-stat"><div class="gs-val">${sortState.moves}</div><div class="gs-label">操作</div></div></div><button onclick="startSort()">再来一次</button></div>`);
+    }
+  }else{
+    const el=document.querySelector(`.sort-num[data-n="${n}"]`);
+    el.style.background='var(--red)';
+    setTimeout(()=>{el.style.background=''},300);
+  }
+}
+
+// ===== SIMON COLOR MEMORY =====
+let simonState={};
+function initSimon(){
+  const area=document.getElementById('gameArea');
+  area.innerHTML=`<div class="game-header"><h3>🎵 颜色记忆</h3><div class="game-stats"><div class="game-stat"><div class="gs-val" id="simonLevel">0</div><div class="gs-label">关卡</div></div><div class="game-stat"><div class="gs-val" id="simonBest">-</div><div class="gs-label">最佳</div></div></div></div><div class="game-controls"><button onclick="startSimon()">开始游戏</button></div><div class="simon-wrap"><div class="simon-board">${['r','b','g','y'].map(c=>`<div class="simon-pad" data-c="${c}" onclick="simonClick('${c}')"></div>`).join('')}</div><div class="simon-center" id="simonCenter">记住<br>颜色顺序</div></div>`;
+  const best=localStorage.getItem('simon_best');
+  if(best)document.getElementById('simonBest').textContent=best;
+}
+function startSimon(){
+  simonState={sequence:[],userIdx:0,playing:false,level:0};
+  document.getElementById('simonLevel').textContent='0';
+  nextSimonLevel();
+}
+function nextSimonLevel(){
+  simonState.level++;
+  simonState.userIdx=0;
+  simonState.sequence.push(['r','b','g','y'][Math.floor(Math.random()*4)]);
+  document.getElementById('simonLevel').textContent=simonState.level;
+  document.getElementById('simonCenter').innerHTML=`第 ${simonState.level} 关<br>注意看`;
+  simonState.playing=true;
+  playSimonSequence();
+}
+function playSimonSequence(){
+  let i=0;
+  const play=()=>{
+    if(i>=simonState.sequence.length){
+      simonState.playing=false;
+      document.getElementById('simonCenter').innerHTML='轮到你了<br>按顺序点击';
+      return;
+    }
+    const pad=document.querySelector(`.simon-pad[data-c="${simonState.sequence[i]}"]`);
+    pad.classList.add('active');
+    setTimeout(()=>{pad.classList.remove('active');setTimeout(play,200)},500);
+    i++;
+  };
+  setTimeout(play,600);
+}
+function simonClick(c){
+  if(simonState.playing||!simonState.sequence.length)return;
+  const pad=document.querySelector(`.simon-pad[data-c="${c}"]`);
+  pad.classList.add('active');
+  setTimeout(()=>pad.classList.remove('active'),200);
+  if(c===simonState.sequence[simonState.userIdx]){
+    simonState.userIdx++;
+    if(simonState.userIdx>=simonState.sequence.length){
+      document.getElementById('simonCenter').innerHTML='正确！<br>下一关';
+      const best=localStorage.getItem('simon_best');
+      if(!best||simonState.level>parseInt(best)){localStorage.setItem('simon_best',simonState.level);document.getElementById('simonBest').textContent=simonState.level}
+      setTimeout(nextSimonLevel,1000);
+    }
+  }else{
+    document.getElementById('simonCenter').innerHTML='游戏结束<br>达到第 '+simonState.level+' 关';
+    simonState.sequence=[];
+  }
+}
+
+// ===== PROFILE / DATA MANAGEMENT =====
+const DEFAULT_PROFILES=[{name:'宝贝',age:'5',avatar:'👶',id:'default'}];
+function getProfiles(){try{const v=localStorage.getItem('profiles');return v?JSON.parse(v):DEFAULT_PROFILES}catch(e){return DEFAULT_PROFILES}}
+function saveProfiles(p){localStorage.setItem('profiles',JSON.stringify(p))}
+function getCurrentProfileId(){return localStorage.getItem('current_profile')||'default'}
+function getCurrentProfile(){const ps=getProfiles();return ps.find(p=>p.id===getCurrentProfileId())||ps[0]}
+function switchProfile(id){localStorage.setItem('current_profile',id);render(document.getElementById('app'))}
+function addProfile(){
+  const name=prompt('孩子的名字：');
+  if(!name)return;
+  const age=prompt('孩子的年龄：','5')||'5';
+  const avatars=['👶','🧒','👦','👧','🐻','🐰','🐱','🐶','🦊','🐼'];
+  const avatar=avatars[Math.floor(Math.random()*avatars.length)];
+  const ps=getProfiles();
+  const id='p_'+Date.now();
+  ps.push({name,age,avatar,id});
+  saveProfiles(ps);
+  localStorage.setItem('current_profile',id);
+  render(document.getElementById('app'));
+}
+function deleteProfile(id){
+  if(id==='default'){alert('默认档案不能删除');return}
+  if(!confirm('确定删除这个档案吗？相关进度数据也会被清除。'))return;
+  let ps=getProfiles();
+  ps=ps.filter(p=>p.id!==id);
+  saveProfiles(ps);
+  if(getCurrentProfileId()===id)localStorage.setItem('current_profile','default');
+  localStorage.removeItem('done_'+id);
+  localStorage.removeItem('fav_'+id);
+  render(document.getElementById('app'));
+}
+function profileDoneKey(){return 'done_'+getCurrentProfileId()}
+function profileFavKey(){return 'fav_'+getCurrentProfileId()}
+function getProfileDone(){try{return JSON.parse(localStorage.getItem(profileDoneKey())||'[]')}catch(e){return[]}}
+function saveProfileDone(a){localStorage.setItem(profileDoneKey(),JSON.stringify(a))}
+function getProfileFav(){try{return JSON.parse(localStorage.getItem(profileFavKey())||'[]')}catch(e){return[]}}
+function saveProfileFav(a){localStorage.setItem(profileFavKey(),JSON.stringify(a));updateFavBadge()}
+
+function exportData(){
+  const data={
+    version:1,
+    exportTime:new Date().toISOString(),
+    profiles:getProfiles(),
+    currentProfile:getCurrentProfileId(),
+    pageData:{},
+    gameBests:{
+      schulte:localStorage.getItem('schulte_best'),
+      whack:localStorage.getItem('whack_best'),
+      simon:localStorage.getItem('simon_best'),
+    }
+  };
+  getProfiles().forEach(p=>{
+    data.pageData[p.id]={
+      done:JSON.parse(localStorage.getItem('done_'+p.id)||'[]'),
+      fav:JSON.parse(localStorage.getItem('fav_'+p.id)||'[]'),
+    };
+  });
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='专注力训练_数据备份_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+function importData(){
+  const input=document.createElement('input');
+  input.type='file';input.accept='.json';
+  input.onchange=e=>{
+    const file=e.target.files[0];
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const data=JSON.parse(ev.target.result);
+        if(!data.profiles||!data.pageData)throw new Error('格式不正确');
+        if(!confirm('导入将覆盖当前所有数据，确定继续吗？'))return;
+        saveProfiles(data.profiles);
+        localStorage.setItem('current_profile',data.currentProfile||'default');
+        Object.entries(data.pageData).forEach(([id,d])=>{
+          if(d.done)localStorage.setItem('done_'+id,JSON.stringify(d.done));
+          if(d.fav)localStorage.setItem('fav_'+id,JSON.stringify(d.fav));
+        });
+        if(data.gameBests){
+          if(data.gameBests.schulte)localStorage.setItem('schulte_best',data.gameBests.schulte);
+          if(data.gameBests.whack)localStorage.setItem('whack_best',data.gameBests.whack);
+          if(data.gameBests.simon)localStorage.setItem('simon_best',data.gameBests.simon);
+        }
+        alert('导入成功！');
+        render(document.getElementById('app'));
+      }catch(err){alert('导入失败：'+err.message)}
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+function clearAllData(){
+  if(!confirm('确定清除所有数据吗？此操作不可恢复！'))return;
+  getProfiles().forEach(p=>{localStorage.removeItem('done_'+p.id);localStorage.removeItem('fav_'+p.id)});
+  ['profiles','current_profile','schulte_best','whack_best','simon_best','theme','fav_pages','done_pages'].forEach(k=>localStorage.removeItem(k));
+  alert('数据已清除');
+  render(document.getElementById('app'));
+}
+
+function renderProfile(app){
+  const profiles=getProfiles();
+  const current=getCurrentProfile();
+  const done=getProfileDone();
+  const fav=getProfileFav();
+  const progress=Math.round(done.length/PAGES.length*100);
+  app.innerHTML=`<div class="profile-header"><div class="profile-avatar">${current.avatar}</div><div class="profile-name">${current.name}</div><div class="profile-age">${current.age}岁</div><div class="profile-switch">${profiles.map(p=>`<div class="profile-chip ${p.id===current.id?'active':''}" onclick="switchProfile('${p.id}')">${p.avatar} ${p.name}</div>`).join('')}<div class="profile-chip add" onclick="addProfile()">➕ 添加</div></div></div><div class="profile-stats"><div class="profile-stat"><div class="ps-val">${done.length}</div><div class="ps-label">已完成页数</div></div><div class="profile-stat"><div class="ps-val">${progress}%</div><div class="ps-label">完成进度</div></div><div class="profile-stat"><div class="ps-val">${fav.length}</div><div class="ps-label">收藏页数</div></div><div class="profile-stat"><div class="ps-val">${localStorage.getItem('schulte_best')||'-'}</div><div class="ps-label">舒尔特最佳(s)</div></div></div><div class="profile-section"><h3>📊 训练进度</h3><div style="height:16px;background:var(--purple-bg);border-radius:8px;overflow:hidden;margin-bottom:8px"><div style="height:100%;width:${progress}%;background:linear-gradient(90deg,var(--purple),var(--purple-light));border-radius:8px;transition:width 0.5s"></div></div><p style="font-size:13px;color:var(--text-light)">已完成 ${done.length}/${PAGES.length} 页，继续加油！</p></div><div class="profile-section"><h3>💾 数据管理</h3><p style="font-size:13px;color:var(--text-light);margin-bottom:12px">导出数据可在另一台设备导入，实现跨设备同步。数据保存在本地浏览器中。</p><div class="data-actions"><button class="data-btn primary" onclick="exportData()">📤 导出数据备份</button><button class="data-btn" onclick="importData()">📥 导入数据</button><button class="data-btn danger" onclick="clearAllData()">🗑 清除所有数据</button></div></div><div class="profile-section"><h3>👶 档案管理</h3><div style="display:flex;flex-direction:column;gap:8px">${profiles.map(p=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-radius:10px"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:24px">${p.avatar}</span><div><div style="font-weight:700;font-size:14px">${p.name}</div><div style="font-size:12px;color:var(--text-light)">${p.age}岁 ${p.id===current.id?'· 当前档案':''}</div></div></div>${p.id!=='default'?`<button onclick="deleteProfile('${p.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:18px">🗑</button>`:''}</div>`).join('')}</div></div>`;
+}
+
+// ========== CATEGORY ==========
+function renderCategory(app,catId){
+  let pages,cat;
+  if(catId==='all'){cat={name:'全部打印材料',icon:'📋',color:'var(--purple)',bg:'var(--purple-bg)',desc:'全部50页A4高清打印材料'};pages=[...PAGES]}
+  else{cat=CATEGORIES.find(c=>c.id===parseInt(catId));pages=PAGES.filter(p=>p.cat===cat.id)}
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>${catId==='all'?'全部材料':`<a href="#/category/all">全部材料</a><span>/</span>${cat.name}`}</div><div class="category-header"><div class="cat-big-icon" style="background:${cat.bg}">${cat.icon}</div><div><h2 style="color:${cat.color}">${cat.name}</h2><p>${cat.desc} · 共 ${pages.length} 页</p></div></div><div class="filter-bar"><label>难度：</label><select id="diffFilter" onchange="filterCat()"><option value="all">全部</option><option value="1">⭐ 入门</option><option value="2">⭐⭐ 进阶</option><option value="3">⭐⭐⭐ 挑战</option></select><label>排序：</label><select id="sortFilter" onchange="filterCat()"><option value="num">按页码</option><option value="diff">按难度</option></select><span class="result-count" id="resultCount">共 ${pages.length} 页</span></div><div class="page-grid" id="catGrid" style="padding-bottom:40px">${pages.map(p=>pageCard(p)).join('')}</div>`;
+  window._catPages=pages;
+}
+function filterCat(){
+  const d=document.getElementById('diffFilter').value;const s=document.getElementById('sortFilter').value;
+  let p=[...window._catPages];
+  if(d!=='all')p=p.filter(x=>x.diff===parseInt(d));
+  if(s==='diff')p.sort((a,b)=>a.diff-b.diff||parseInt(a.num)-parseInt(b.num));
+  document.getElementById('catGrid').innerHTML=p.map(x=>pageCard(x)).join('');
+  document.getElementById('resultCount').textContent=`共 ${p.length} 页`;
+}
+
+// ========== DETAIL ==========
+function renderDetail(app,num){
+  const p=PAGES.find(x=>x.num===num);
+  if(!p){app.innerHTML='<div class="empty-state"><div class="empty-icon">😕</div><h3>页面不存在</h3><a href="#/category/all">返回全部材料</a></div>';return}
+  const cat=CATEGORIES.find(c=>c.id===p.cat);
+  const idx=PAGES.indexOf(p);
+  const prev=idx>0?PAGES[idx-1]:null;const next=idx<PAGES.length-1?PAGES[idx+1]:null;
+  const related=PAGES.filter(x=>x.cat===p.cat&&x.num!==p.num).slice(0,3);
+  const fav=isFav(num);const done=isDone(num);
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span><a href="#/category/all">全部材料</a><span>/</span><a href="#/category/${cat.id}">${cat.name}</a><span>/</span>第${num}页</div><div class="detail-layout"><div class="detail-image"><img src="images/page_${num}.png" alt="${p.title}" id="detailImg" onclick="openLightbox('${num}')"><div class="zoom-hint">💡 点击图片放大 · 键盘 ← → 翻页</div></div><div class="detail-sidebar"><div class="detail-card"><span class="detail-num" style="background:${cat.color}">第 ${num} 页</span><h2>${p.title}</h2><p class="detail-desc">${p.desc}</p><div class="detail-meta-row"><span class="meta-tag">${cat.icon} ${cat.name}</span><span class="meta-diff" style="color:${DIFF_C[p.diff]}">${DIFF_S[p.diff]} ${DIFF[p.diff]}</span><span class="meta-time">⏱ ${p.time}</span></div><div class="skill-tags">${p.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div><a href="images/page_${num}.png" download="专注力训练_${num}_${p.title}.png" class="btn-download">⬇ 下载高清打印版</a><div class="btn-row"><button class="btn-fav ${fav?'active':''}" id="favBtn" onclick="toggleFavDetail('${num}')">${fav?'❤️ 已收藏':'🤍 收藏'}</button><button class="btn-done ${done?'active':''}" id="doneBtn" onclick="toggleDoneDetail('${num}')">${done?'✓ 已完成':'○ 标记完成'}</button></div><div class="btn-row"><button class="btn-print" onclick="window.print()">🖨 打印此页</button></div><div class="detail-nav">${prev?`<a href="#/page/${prev.num}">← 第${prev.num}页</a>`:'<a class="disabled">第一页</a>'}${next?`<a href="#/page/${next.num}">第${next.num}页 →</a>`:'<a class="disabled">最后一页</a>'}</div></div>${related.length>0?`<div class="detail-card related-section"><h4>🔗 同分类推荐</h4><div class="related-grid">${related.map(r=>`<div class="related-card" onclick="navigate('#/page/${r.num}')"><div class="r-thumb"><img src="thumbs/page_${r.num}.jpg" alt="${r.title}" loading="lazy"></div><div class="r-info"><div class="r-title">${r.title}</div></div></div>`).join('')}</div></div>`:''}<div class="detail-card" style="font-size:12px;color:var(--text-light);line-height:1.8"><strong style="color:var(--purple)">💡 使用建议</strong><br>建议A4彩色打印，可覆膜反复使用。每次1-2页，10-15分钟，保持孩子兴趣。</div></div></div>`;
+}
+function toggleFavDetail(n){const f=toggleFav(n);const b=document.getElementById('favBtn');if(b){b.classList.toggle('active',f);b.innerHTML=f?'❤️ 已收藏':'🤍 收藏'}}
+function toggleDoneDetail(n){const d=toggleDone(n);const b=document.getElementById('doneBtn');if(b){b.classList.toggle('active',d);b.innerHTML=d?'✓ 已完成':'○ 标记完成'}}
+
+// ========== FAVORITES ==========
+function renderFavorites(app){
+  const nums=getFav();const pages=PAGES.filter(p=>nums.includes(p.num));
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>我的收藏</div><div class="category-header"><div class="cat-big-icon" style="background:#FDEDEC">❤️</div><div><h2 style="color:var(--red)">我的收藏</h2><p>收藏了 ${pages.length} 页训练材料</p></div></div>${pages.length>0?`<div class="page-grid" style="padding-bottom:40px">${pages.map(p=>pageCard(p)).join('')}</div>`:`<div class="empty-state"><div class="empty-icon">💔</div><h3>还没有收藏</h3><p>浏览材料时点击 ❤️ 按钮收藏</p><a href="#/category/all">去浏览材料 →</a></div>`}`;
+}
+
+// ========== GAMES ==========
+function renderGames(app){
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>亲子游戏</div><div class="category-header"><div class="cat-big-icon" style="background:#E8F8F5">👨‍👩‍👧</div><div><h2 style="color:#1ABC9C">亲子游戏大全</h2><p>10个不需要打印的家庭专注力游戏，随时随地都能玩</p></div></div><div class="game-grid" style="padding-bottom:40px">${GAMES.map(g=>`<div class="game-card" style="border-left-color:${g.color}"><div class="gc-header"><div class="gc-icon" style="background:${g.bg}">${g.icon}</div><div><h4 style="color:${g.color}">${g.name}</h4></div></div><div class="gc-meta"><span>👶 ${g.age}</span><span>⏱ ${g.time}</span></div><p class="gc-desc">${g.desc}</p><ol class="gc-how">${g.how.map(h=>`<li>${h}</li>`).join('')}</ol></div>`).join('')}</div>`;
+}
+
+// ========== PLAN ==========
+let currentPlan='7day';
+function renderPlan(app){
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>训练计划</div><div class="category-header"><div class="cat-big-icon" style="background:#FEF9E7">📅</div><div><h2 style="color:#F39C12">科学训练计划</h2><p>三套循序渐进的训练方案，按天执行，系统提升专注力</p></div></div><div class="plan-tabs">${Object.entries(PLANS).map(([k,v])=>`<button class="plan-tab ${k===currentPlan?'active':''}" onclick="switchPlan('${k}')">${v.name}</button>`).join('')}</div><div id="planContent"></div>`;
+  renderPlanContent();
+}
+function switchPlan(k){currentPlan=k;document.querySelectorAll('.plan-tab').forEach((t,i)=>t.classList.toggle('active',Object.keys(PLANS)[i]===k));renderPlanContent()}
+function renderPlanContent(){
+  const plan=PLANS[currentPlan];
+  document.getElementById('planContent').innerHTML=`<p style="margin-bottom:16px;color:var(--text-light);font-size:14px">${plan.desc}</p>${plan.days.map(d=>`<div class="plan-day"><div class="day-num">D${d.d}</div><div class="day-content"><h4>${d.theme}</h4><div class="day-pages">${d.pages.map(pn=>{const pg=PAGES.find(x=>x.num===pn);return`<span class="day-page" onclick="navigate('#/page/${pn}')">第${pn}页 ${pg?pg.title:''}</span>`}).join('')}</div></div></div>`).join('')}<div style="height:30px"></div>`;
+}
+
+// ========== ASSESSMENT ==========
+let assessAnswers={};
+function renderAssessment(app){
+  assessAnswers={};
+  app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>能力测评</div><div class="about-hero" style="margin:20px 0"><h2>🧠 专注力能力测评</h2><p>通过8个维度的自评，了解孩子的专注力发展状况，获得针对性训练建议</p></div><div id="assessForm">${ASSESSMENT.map((a,di)=>`<div class="assess-dimension"><h4><span style="background:${a.bg};padding:4px 10px;border-radius:8px">${a.icon}</span> ${a.dim}</h4>${a.q.map((q,qi)=>`<div style="margin-bottom:10px"><p style="font-size:13px;margin-bottom:6px;color:var(--text)">${q}</p><div class="assess-options">${ASSESS_OPTS.map(o=>`<button class="assess-opt" onclick="selectAssess(${di},${qi},${o.v},this)">${o.label}</button>`).join('')}</div></div>`).join('')}</div>`).join('')}<div style="text-align:center;margin:24px 0"><button onclick="submitAssess()" style="padding:14px 40px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(108,52,131,0.3)">📊 查看测评结果</button></div></div><div id="assessResult"></div>`;
+}
+function selectAssess(di,qi,v,btn){
+  const key=`${di}_${qi}`;assessAnswers[key]=v;
+  btn.parentElement.querySelectorAll('.assess-opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+function submitAssess(){
+  const total=ASSESSMENT.reduce((s,a)=>s+a.q.length,0);
+  const answered=Object.keys(assessAnswers).length;
+  if(answered<total){alert(`还有 ${total-answered} 道题未回答，请完成全部题目`);return}
+  const scores=ASSESSMENT.map((a,di)=>{const sum=a.q.reduce((s,_,qi)=>s+(assessAnswers[`${di}_${qi}`]||0),0);return{dim:a.dim,icon:a.icon,color:a.color,score:Math.round(sum/a.q.length/4*100)}});
+  const avg=Math.round(scores.reduce((s,x)=>s+x.score,0)/scores.length);
+  const weak=scores.filter(s=>s.score<60).map(s=>s.dim);
+  const strong=scores.filter(s=>s.score>=80).map(s=>s.dim);
+  document.getElementById('assessForm').style.display='none';
+  const res=document.getElementById('assessResult');
+  res.innerHTML=`<div class="assess-result"><h3>🎉 测评完成</h3><p style="color:var(--text-light);margin-bottom:20px">综合专注力指数：<strong style="font-size:28px;color:var(--purple)">${avg}</strong> / 100</p><div class="result-bars">${scores.map(s=>`<div class="result-bar-row"><div class="bar-label"><span>${s.icon} ${s.dim}</span><span>${s.score}%</span></div><div class="bar-track"><div class="bar-fill" style="width:0%;background:${s.color}" data-w="${s.score}%"></div></div></div>`).join('')}</div><div style="margin-top:24px;text-align:left;max-width:500px;margin-left:auto;margin-right:auto">${strong.length>0?`<p style="margin-bottom:8px"><strong style="color:var(--green)">💪 优势领域：</strong>${strong.join('、')}</p>`:''}${weak.length>0?`<p style="margin-bottom:8px"><strong style="color:var(--orange)">📌 待加强：</strong>${weak.join('、')}</p>`:''}<p style="color:var(--text-light);font-size:13px;margin-top:12px">${weak.length>0?`建议优先在「${weak[0]}」方面多做训练，点击下方查看相关材料。`:'各项能力发展均衡，继续保持！'}</p></div><div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">${weak.length>0?`<button onclick="navigate('#/category/${ASSESSMENT.find(a=>a.dim===weak[0]).id}')" style="padding:10px 24px;border-radius:10px;border:none;background:var(--purple);color:#fff;font-weight:700;cursor:pointer">查看「${weak[0]}」训练材料</button>`:''}<button onclick="render(document.getElementById('app'))" style="padding:10px 24px;border-radius:10px;border:2px solid var(--card-border);background:var(--card);color:var(--text);font-weight:700;cursor:pointer">重新测评</button></div></div>`;
+  setTimeout(()=>{document.querySelectorAll('.bar-fill').forEach(b=>b.style.width=b.dataset.w)},100);
+}
+
+// ========== ABOUT ==========
+function renderAbout(app){
+  app.innerHTML=`<div class="about-hero"><h2>关于专注力训练乐园</h2><p>专为3-6岁幼儿设计的综合专注力训练平台，包含60页打印材料、7款互动训练、10个亲子游戏和科学训练计划，让孩子在游戏中提升专注力。</p></div><div class="section" style="padding-top:0"><div class="section-title"><div class="title-icon" style="background:var(--purple-bg)">✨</div>平台特色</div><div class="feature-grid"><div class="feature-card"><div class="f-icon">🖨</div><h3>60页打印材料</h3><p>8大能力维度，A4高清PNG，即印即用</p></div><div class="feature-card"><div class="f-icon">🎮</div><h3>7款互动训练</h3><p>舒尔特方格、记忆翻翻乐、打地鼠等，网页直接玩</p></div><div class="feature-card"><div class="f-icon">👨‍👩‍👧</div><h3>10个亲子游戏</h3><p>不需要道具，随时随地都能玩的专注力游戏</p></div><div class="feature-card"><div class="f-icon">📅</div><h3>科学训练计划</h3><p>7天/14天/30天三套方案，系统提升</p></div><div class="feature-card"><div class="f-icon">🧠</div><h3>能力测评</h3><p>8维度自评，了解优势与待加强领域</p></div><div class="feature-card"><div class="f-icon">📊</div><h3>进度追踪</h3><p>标记已完成页面，追踪训练进度</p></div></div></div><div class="section" style="padding-top:0"><div class="section-title"><div class="title-icon" style="background:#FEF5E7">📋</div>8大能力维度</div><div class="category-grid">${CATEGORIES.map(c=>`<div class="category-card" onclick="navigate('#/category/${c.id}')"><div class="cat-icon" style="background:${c.bg}">${c.icon}</div><div class="cat-name" style="color:${c.color}">${c.name}</div><div class="cat-count">${PAGES.filter(p=>p.cat===c.id).length} 页</div></div>`).join('')}</div></div>`;
+}
+
+// ========== HELPERS ==========
+function pageCard(p){
+  const cat=CATEGORIES.find(c=>c.id===p.cat);const fav=isFav(p.num);const done=isDone(p.num);
+  return `<div class="page-card" onclick="navigate('#/page/${p.num}')"><div class="thumb">${done?'<span class="done-badge">✓ 已完成</span>':''}<img src="thumbs/page_${p.num}.jpg" alt="${p.title}" loading="lazy"><button class="fav-btn ${fav?'active':''}" onclick="event.stopPropagation();toggleFavCard(this,'${p.num}')">${fav?'❤️':'🤍'}</button></div><div class="info"><div class="top-row"><span class="page-num" style="background:${cat.color}">第${p.num}页</span><span class="difficulty" style="color:${DIFF_C[p.diff]}">${DIFF_S[p.diff]}</span></div><div class="page-title">${p.title}</div><div class="page-desc">${p.desc}</div></div></div>`;
+}
+function toggleFavCard(btn,n){const f=toggleFav(n);btn.classList.toggle('active',f);btn.textContent=f?'❤️':'🤍'}
+function randomPage(){navigate('#/page/'+PAGES[Math.floor(Math.random()*PAGES.length)].num)}
+function doSearch(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  if(!q)return;
+  const results=PAGES.filter(p=>p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q)||p.skills.some(s=>s.toLowerCase().includes(q)));
+  if(results.length===1)navigate('#/page/'+results[0].num);
+  else if(results.length>0){
+    const app=document.getElementById('app');
+    app.innerHTML=`<div class="breadcrumb"><a href="#/">首页</a><span>/</span>搜索结果</div><div class="category-header"><div class="cat-big-icon" style="background:var(--purple-bg)">🔍</div><div><h2>搜索: "${q}"</h2><p>找到 ${results.length} 个结果</p></div></div><div class="page-grid" style="padding-bottom:40px">${results.map(p=>pageCard(p)).join('')}</div>`;
+  }else alert('未找到相关内容，请尝试其他关键词');
+}
+
+// ========== LIGHTBOX ==========
+let lbNum=null;
+function openLightbox(num){lbNum=num;const p=PAGES.find(x=>x.num===num);document.getElementById('lbImg').src='images/page_'+num+'.png';document.getElementById('lbCaption').textContent=`第${p.num}页 · ${p.title}`;document.getElementById('lightbox').classList.add('active');document.body.style.overflow='hidden'}
+function closeLightbox(e){if(e&&e.target!==e.currentTarget&&!e.target.classList.contains('lb-close'))return;document.getElementById('lightbox').classList.remove('active');document.body.style.overflow=''}
+function lbNav(d){if(!lbNum)return;const i=PAGES.findIndex(x=>x.num===lbNum);openLightbox(PAGES[(i+d+PAGES.length)%PAGES.length].num)}
+
+// ========== KEYBOARD ==========
+document.addEventListener('keydown',e=>{
+  const lb=document.getElementById('lightbox').classList.contains('active');
+  if(lb){if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);return}
+  const p=getRoute();
+  if(p[0]==='page'){const i=PAGES.findIndex(x=>x.num===p[1]);if(e.key==='ArrowLeft'&&i>0)navigate('#/page/'+PAGES[i-1].num);if(e.key==='ArrowRight'&&i<PAGES.length-1)navigate('#/page/'+PAGES[i+1].num)}
+});
+
+// ========== BACK TO TOP ==========
+window.addEventListener('scroll',()=>{const b=document.getElementById('backToTop');if(b)b.classList.toggle('show',window.scrollY>400)});
+</script>
+</body>
+</html>
